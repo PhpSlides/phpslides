@@ -5,7 +5,7 @@
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "php_slides",
+		"liveServer.settings.multiRootWorkspaceName": "phpslides",
 		"php.version": "8.3"
 	}
 }
