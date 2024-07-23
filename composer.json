@@ -1,44 +1,59 @@
 {
-    "name": "phpslides/phpslides",
-    "description": "Slides to the next level in PHP using PhpSlides, a light MVC fast framework!",
-    "homepage": "https://github.com/phpslides",
-    "version": "1.2.3",
-    "type": "project",
-    "keywords": [
-        "php",
-        "api",
-        "router",
-        "phpslides",
-        "php_slides",
-        "server",
-        "framework"
-    ],
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/",
-            "App\\Database\\": "database/"
-        }
-    },
-    "authors": [{
-        "name": "Dave Conco",
-        "email": "concodave@gmail.com",
-        "homepage": "https://dconco.github.io"
-    }],
-    "require": {
-        "php": "^8.3",
-        "phpslides/framework": "^1.0"
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true
-    },
-    "extra": {
-        "symfony": {
-            "allow-contrib": false
-        }
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+	"name": "phpslides/phpslides",
+	"description": "Slides to the next level in PHP using PhpSlides, a light MVC fast framework!",
+	"homepage": "https://github.com/phpslides",
+	"version": "1.2.3",
+	"type": "project",
+	"keywords": [
+		"php",
+		"api",
+		"router",
+		"phpslides",
+		"php_slides",
+		"server",
+		"framework"
+	],
+	"license": "MIT",
+	"autoload": {
+		"psr-4": {
+			"App\\Controller\\": "app/controllers/",
+			"App\\Middlewares\\": "app/middlewares/",
+			"App\\Models\\": "app/models/",
+			"App\\Database\\": "database/"
+		}
+	},
+	"authors": [
+		{
+			"name": "Dave Conco",
+			"email": "concodave@gmail.com",
+			"homepage": "https://dconco.github.io"
+		}
+	],
+	"require": {
+		"php": "^8.2",
+		"phpslides/framework": "^1.0"
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"preferred-install": "dist",
+		"sort-packages": true
+	},
+	"scripts": {
+		"post-root-package-install": [
+			"if [ ! -f .env ]; then cp .env.example .env; fi || copy .env.example .env"
+		],
+		"post-create-project-cmd": [
+			"if [ ! -f .env ]; then cp .env.example .env; fi || copy .env.example .env"
+		]
+	},
+	"scripts-descriptions": {
+		"copy-env": "Copies .env.example to .env if .env does not exist"
+	},
+	"extra": {
+		"symfony": {
+			"allow-contrib": false
+		}
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true
 }

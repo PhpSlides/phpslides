@@ -6,6 +6,7 @@
 /.idea
 /.vscode
 .log
+.env
 access_log
 composer.lock
 composer.phar
