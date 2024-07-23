@@ -14,7 +14,7 @@
 
 <head>
     <title>Dashboard | PhpSlides</title>
-    <include path="components/Header.php" />
+    <include path="../src/components/Header.php" />
 
     <style>
         .logo {

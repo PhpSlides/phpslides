@@ -4,7 +4,7 @@
 <head>
     <title>404 | Page Not Found</title>
     <!-- includes the Header.php file -->
-    <include path="../components/Header.php" />
+    <include path="../../src/components/Header.php" />
 
     <style>
         h3.text {

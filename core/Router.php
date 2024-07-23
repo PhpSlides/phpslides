@@ -14,7 +14,7 @@ require_once dirname(__DIR__) . '/app/Functions.php';
  * | The parameter contains only be a boolean, which indicates request logger to prints out logs output on each received request
  * ---------------------------------------------------------------------------------------------------------------------------
  */
-Route::config();
+Route::config(__DIR__);
 
 require_once dirname(__DIR__) . '/routes/api.php';
 require_once dirname(__DIR__) . '/routes/web.php';
