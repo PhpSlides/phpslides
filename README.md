@@ -255,4 +255,4 @@ please follow these steps:
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](?tab=MIT-1-ov-file#) file for more details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/PhpSlides/phpslides/blob/master/LICENSE) file for more details.
