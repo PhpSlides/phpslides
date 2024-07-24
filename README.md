@@ -213,8 +213,8 @@ project_root/<br>
 │ ├── controllers/<br>
 │ ├── middlewares/<br>
 │ ├── models/<br>
+├── bootstrap/<br>
 ├── configs/<br>
-├── core/<br>
 ├── database/<br>
 ├── public/<br>
 ├── resources/<br>

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpSlides\Controller;
+namespace App\Controller;
 
 final class RouteExampleController extends Controller
 {
