@@ -1,4 +1,14 @@
 #!/usr/bin/env php
 <?php
-   
-?>
+
+use PhpSlides\Foundation\Console;
+
+shell_exec('composer dump-autoload');
+
+// Register the Composer autoloader...
+require_once __DIR__.'/vendor/autoload.php';
+
+// Bootstrap PhpSlides and handle the command...
+$status = (new Console($argv))->output();
+
+exit($status);

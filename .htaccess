@@ -5,7 +5,7 @@ RewriteEngine On
 RewriteCond %{HTTP:Authorization} ^(.+)$
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-# Redirect all folders and files in the root project to routes.php
+# Redirect all folders and files from request url to serve with PhpSlides configuration.
 RewriteCond %{REQUEST_FILENAME} !-d|-d
 RewriteCond %{REQUEST_FILENAME} !-f|-f
-RewriteRule ^(.*) src/Router.php?uri=$1 [QSA,L]
+RewriteRule ^(.*) bootstrap/app.php?uri=$1 [QSA,L]
