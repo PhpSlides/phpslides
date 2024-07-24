@@ -36,10 +36,10 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "if [ ! -f .env ]; then cp .env.example .env; fi || copy .env.example .env"
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "if [ ! -f .env ]; then cp .env.example .env; fi || copy .env.example .env"
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ]
     },
     "extra": {
