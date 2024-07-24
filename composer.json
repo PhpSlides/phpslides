@@ -1,54 +1,52 @@
 {
-	"name": "phpslides/phpslides",
-	"description": "Slides to the next level in PHP using PhpSlides, a light MVC fast framework!",
-	"homepage": "https://github.com/phpslides",
-	"type": "project",
-	"keywords": [
-		"php",
-		"api",
-		"router",
-		"phpslides",
-		"php_slides",
-		"server",
-		"framework"
-	],
-	"license": "MIT",
-	"autoload": {
-		"psr-4": {
-			"App\\Controller\\": ["app/controllers/", "app/controllers/api/"],
-			"App\\Middleware\\": "app/middlewares/",
-			"App\\Model\\": "app/models/"
-		}
-	},
-	"authors": [
-		{
-			"name": "Dave Conco",
-			"email": "concodave@gmail.com",
-			"homepage": "https://dconco.github.io"
-		}
-	],
-	"require": {
-		"php": "^8.2",
-		"phpslides/framework": "^1.0.0-alpha"
-	},
-	"config": {
-		"optimize-autoloader": true,
-		"preferred-install": "dist",
-		"sort-packages": true
-	},
-	"scripts": {
-		"post-root-package-install": [
-			"if [ ! -f .env ]; then cp .env.example .env; fi || copy .env.example .env"
-		],
-		"post-create-project-cmd": [
-			"if [ ! -f .env ]; then cp .env.example .env; fi || copy .env.example .env"
-		]
-	},
-	"extra": {
-		"symfony": {
-			"allow-contrib": false
-		}
-	},
-	"minimum-stability": "stable",
-	"prefer-stable": true
+    "name": "phpslides/phpslides",
+    "description": "Slides to the next level in PHP using PhpSlides, a light MVC fast framework!",
+    "homepage": "https://github.com/phpslides",
+    "type": "project",
+    "keywords": [
+        "php",
+        "api",
+        "router",
+        "phpslides",
+        "php_slides",
+        "server",
+        "framework"
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\Controller\\": ["app/controller/", "app/controller/api/"],
+            "App\\Middleware\\": "app/middleware/",
+            "App\\Model\\": "app/model/"
+        }
+    },
+    "authors": [{
+        "name": "Dave Conco",
+        "email": "concodave@gmail.com",
+        "homepage": "https://dconco.github.io"
+    }],
+    "require": {
+        "php": "^8.0",
+        "phpslides/framework": "1.0.0-alpha"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "if [ ! -f .env ]; then cp .env.example .env; fi || copy .env.example .env"
+        ],
+        "post-create-project-cmd": [
+            "if [ ! -f .env ]; then cp .env.example .env; fi || copy .env.example .env"
+        ]
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
