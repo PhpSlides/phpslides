@@ -2,15 +2,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="title" content="PhpSlides | PHP Framework" />
 
-<link rel="apple-touch-icon" href="<? asset('Assets::Icons::Icon.png') ?>" sizes="234x234" />
-<link rel="shortcut icon" href="<? asset('Assets::Icons::Icon.png') ?>" type="image/png" />
-<link rel="icon" href="<? asset('Assets::Icons::Icon.png') ?>" type="image/png" />
-
-<!-- CSS Links -->
-<link rel="stylesheet" type="text/css" href="<? asset('Styles::App.css') ?>">
+<link rel="apple-touch-icon" href="<? asset('Assets::Icon.png') ?>" sizes="234x234" />
+<link rel="shortcut icon" href="<? asset('Assets::Icon.png') ?>" type="image/png" />
+<link rel="icon" href="<? asset('Assets::Icon.png') ?>" type="image/png" />
 
 <!-- Internal Styling -->
 <style>
+   body {
+      margin: 0;
+      display: flex;
+      height: 100svh;
+      flex-flow: column;
+      background: #bb9fe5;
+   }
+   
+   @keyframes ZoomIn {
+      from {
+         transform: scale(0, 0);
+      }
+      75% {
+         transform: scale(1.2, 1.2);
+      }
+      to {
+         transform: scale(1, 1);
+      }
+   }
+   
+   @keyframes ReSeize {
+      50% {
+         transform: scale(1.15, 1.15);
+      }
+      100% {
+         transform: scale(1, 1);
+      }
+   }
+   
+   @keyframes ButtonAnim {
+      0% {
+         transform: scale(1.3, 1.3);
+      }
+      100% {
+         transform: scale(1, 1);
+      }
+   }
+
 	.container {
 		width: 70%;
 		height: 70%;

@@ -199,24 +199,20 @@ project_root/<br>
 │ ├── controllers/<br>
 │ ├── middlewares/<br>
 │ ├── models/<br>
-├── bootstrap/<br>
-├── configs/<br>
-├── database/<br>
 ├── public/<br>
-├── resources/<br>
-│ ├── src/<br>
-│ │ ├── components/<br>
-│ │ ├── scripts/<br>
-│ │ └── styles/<br>
-│ ├── views/<br>
-│ │ └── errors/<br>
-├── routes/<br>
+├── src/<br>
+│ ├── bootstrap/<br>
+│ ├── configs/<br>
+│ ├── resources/<br>
+│ │ └── views/<br>
+│ │   └── errors/<br>
 ├── vendor/<br>
 ├── .env<br>
 ├── .env.example<br>
 ├── .htaccess<br>
 ├── composer.json<br>
-├── create<br>
+├── slides<br>
+├── LICENSE<br>
 ├── phpslides.config.json<br>
 └── README.md
 
