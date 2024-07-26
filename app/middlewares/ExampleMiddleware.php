@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Middleware;
+namespace App\Middlewares;
 
 use Closure;
 use PhpSlides\Http\Request;

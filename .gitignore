@@ -7,7 +7,9 @@
 /.vscode
 .log
 .env
+log
 access_log
 composer.lock
 composer.phar
 error.log
+server.log

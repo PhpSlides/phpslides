@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controllers;
 
 use PhpSlides\Http\Request;
 use PhpSlides\Http\ApiController;
