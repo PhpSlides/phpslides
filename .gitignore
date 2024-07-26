@@ -12,4 +12,3 @@ access_log
 composer.lock
 composer.phar
 error.log
-server.log

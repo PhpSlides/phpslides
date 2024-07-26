@@ -10,22 +10,26 @@ streamlining the development process and enhancing productivity.
 
 ## Table of Contents
 
--  [Introduction](#introduction)
--  [Features](#features)
--  [Requirements](#requirements)
--  [Installation](#installation)
--  [Configuration](#configuration)
-   -  [ENV config](#env)
-   -  [phpslides config](#phpslidesconfigjson)
--  [Syntax](#syntax)
-   -  [Creating Web Layouts](#creating-web-layouts)
-   -  [Styling Web Layouts](#styling-web-layouts)
-   -  [Creating Web Routes](#creating-web-routes)
-   -  [Creating API Routes](#creating-api-routes)
--  [Directory Structure](#directory-structure)
--  [Documentation](#documentation)
--  [Contributing](#contributing)
--  [License](#license)
+- [PhpSlides](#phpslides)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+    - [Install with Composer](#install-with-composer)
+    - [Or Clone the Repository](#or-clone-the-repository)
+  - [Configuration](#configuration)
+    - [.env](#env)
+    - [phpslides.config.json](#phpslidesconfigjson)
+  - [Syntax](#syntax)
+    - [Creating Web Layouts](#creating-web-layouts)
+    - [Styling Web Layouts](#styling-web-layouts)
+    - [Creating Web Routes](#creating-web-routes)
+    - [Creating API Routes](#creating-api-routes)
+  - [Directory Structure](#directory-structure)
+  - [Documentation](#documentation)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Introduction
 
@@ -36,19 +40,19 @@ Additionally, it provides the capability to write HTML, CSS, and JavaScript in a
 
 ## Features
 
--  **Full-Stack Development**: Seamlessly integrate front-end and back-end development by writing HTML, CSS, and JavaScript in a PHP-like syntax.
--  **Simple Routing**: Easily define routes and map them to controllers and actions.
--  **Modular Structure**: Organized directory structure for models, views, controllers, and other components.
--  **Database Abstraction**: Simple and flexible database handling with a query builder.
--  **Middleware Support**: Add middleware to handle authentication, logging, and other tasks.
--  **Event Handling**: Built-in event handling system for managing application events.
--  **Service Providers**: Easily manage and configure services like email, payment, caching, etc.
+- **Full-Stack Development**: Seamlessly integrate front-end and back-end development by writing HTML, CSS, and JavaScript in a PHP-like syntax.
+- **Simple Routing**: Easily define routes and map them to controllers and actions.
+- **Modular Structure**: Organized directory structure for models, views, controllers, and other components.
+- **Database Abstraction**: Simple and flexible database handling with a query builder.
+- **Middleware Support**: Add middleware to handle authentication, logging, and other tasks.
+- **Event Handling**: Built-in event handling system for managing application events.
+- **Service Providers**: Easily manage and configure services like email, payment, caching, etc.
 
 ## Requirements
 
--  PHP 8.2 or higher
--  Composer
--  A web server (e.g., Apache, Nginx)
+- PHP 8.2 or higher
+- Composer
+- A web server (e.g., Apache, Nginx)
 
 ## Installation
 
@@ -109,16 +113,8 @@ APP_DEBUG=true
       "images": ["image"],
       "videos": ["video"],
       "audios": ["audio"],
-      "styles": [
-         "css",
-         "scss",
-         "sass"
-      ],
-      "css": [
-         "css",
-         "scss",
-         "sass"
-      ],
+      "styles": ["css", "scss", "sass" ],
+      "css": ["css", "scss", "sass" ],
       "src": [
          "js",
          "ts",

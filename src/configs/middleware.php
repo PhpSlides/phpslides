@@ -1,6 +1,6 @@
 <?php
 
-use App\Middleware\ExampleMiddleware;
+use App\Middlewares\ExampleMiddleware;
 
 return [
 	'example' => ExampleMiddleware::class
