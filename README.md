@@ -103,19 +103,33 @@ APP_DEBUG=true
 
 ```json
 {
-	"public": {
-		"/": ["*"],
-		"assets": ["*"],
-		"images": ["image"],
-		"videos": ["video"],
-		"audios": ["audio"],
-		"styles": ["css", "scss", "sass"],
-		"css": ["css", "scss", "sass"],
-		"src": ["js", "ts", "css", "scss", "sass"],
-		"png": ["png"],
-		"svg": ["svg"]
-	},
-	"charset": "UTF-8"
+   "public": {
+      "/": ["*"],
+      "assets": ["*"],
+      "images": ["image"],
+      "videos": ["video"],
+      "audios": ["audio"],
+      "styles": [
+         "css",
+         "scss",
+         "sass"
+      ],
+      "css": [
+         "css",
+         "scss",
+         "sass"
+      ],
+      "src": [
+         "js",
+         "ts",
+         "css",
+         "scss",
+         "sass"],
+      "png": ["png"],
+      "jpg": ["jpg"],
+      "svg": ["svg"]
+   },
+   "charset": "UTF-8"
 }
 ```
 
@@ -237,4 +251,4 @@ please follow these steps:
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](#license) file for more details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/PhpSlides/phpslides/blob/master/LICENSE) file for more details.
