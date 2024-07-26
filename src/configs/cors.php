@@ -19,12 +19,12 @@ return [
 	/*
 	 *? Specific domains that are allowed to access your resources.
 	 */
-	'allow_origin' => ['http://localhost'],
+	'allow_origin' => '*',
 
 	/*
 	 *? The HTTP methods that are allowed for CORS requests.
 	 */
-	'allow_methods' => ['POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+	'allow_methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 
 	/*
 	 *? Headers that are allowed in CORS requests.
@@ -53,26 +53,6 @@ return [
 	 *? Indicates whether the request can include user credentials.
 	 */
 	'allow_credentials' => true,
-
-	/*
-	 *? Boolean to toggle between allowing any origin or specific ones.
-	 */
-	#	'allow_any_origin' => false,
-
-	/*
-	 *? Regular expressions to match allowed origins dynamically
-	 */
-	#	'allowed_origins_patterns' => ['/^https:\/\/(\w+\.)?example\.com$/'],
-
-	/*
-	 *? Boolean to toggle between allowing any method or specified ones.
-	 */
-	#	'allow_any_method' => false,
-
-	/*
-	 *? Boolean to toggle between allowing any header or specified ones.
-	 */
-	#	'allow_any_header' => false,
 
 	/*
 	 *? Another toggle for allowing credentials, ensuring clarity.
