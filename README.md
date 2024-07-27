@@ -1,5 +1,11 @@
 # PhpSlides
 
+<p align="center">
+   <a href="https://github.com/phpslides/framework/actions"><img src="https://github.com/phpslides/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+   <a href="https://packagist.org/packages/phpslides/framework"><img src="https://img.shields.io/packagist/dt/phpslides/framework" alt="Total Downloads"></a><a href="https://packagist.org/packages/phpslides/framework"><img src="https://img.shields.io/packagist/v/phpslides/framework" alt="Latest Stable Version"></a>
+   <a href="https://packagist.org/packages/phpslides/framework"><img src="https://img.shields.io/packagist/l/phpslides/framework" alt="License"></a>
+</p>
+
 Welcome to PhpSlides!<br>
 This framework is a PHP revolution,
 designed to provide a simple and scalable structure for developing full-stack web applications
