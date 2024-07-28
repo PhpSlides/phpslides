@@ -2,9 +2,7 @@
 /public/build
 /public/storage
 /storage/*.key
-/vendor/*
-!/vendor/phpslides/
-/vendor/phpslides/*
+/vendor
 /.idea
 /.vscode
 .log
