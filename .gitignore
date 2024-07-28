@@ -3,7 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
-!/vendor/phpslides
+/vendor/!phpslides
 /.idea
 /.vscode
 .log
