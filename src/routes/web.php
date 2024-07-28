@@ -11,7 +11,7 @@ use PhpSlides\Route;
  * --------------------------------------------------------------------
  */
 Route::redirect('/', '/dashboard');
-Route::view('/dashboard', '::Dashboard');
+Route::view('/dashboard', '::App');
 
 // Handle not found error pages
 Route::any('*', view::render('::Errors::404'));
