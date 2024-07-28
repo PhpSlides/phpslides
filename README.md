@@ -1,7 +1,8 @@
 # PhpSlides
 
 <p align="center">
-   <a href="https://packagist.org/packages/phpslides/framework"><img src="https://img.shields.io/packagist/dt/phpslides/framework" alt="Total Downloads"></a><a href="https://packagist.org/packages/phpslides/framework"><img src="https://img.shields.io/packagist/v/phpslides/framework" alt="Latest Stable Version"></a>
+   <a href="https://packagist.org/packages/phpslides/framework"><img src="https://img.shields.io/packagist/dt/phpslides/framework" alt="Total Downloads"></a>
+   <a href="https://packagist.org/packages/phpslides/framework"><img src="https://img.shields.io/packagist/v/phpslides/framework" alt="Latest Stable Version"></a>
    <a href="https://packagist.org/packages/phpslides/framework"><img src="https://img.shields.io/packagist/l/phpslides/framework" alt="License"></a>
 </p>
 
