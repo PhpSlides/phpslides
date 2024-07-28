@@ -6,7 +6,7 @@ use PhpSlides\Console\Console;
 shell_exec('composer dump-autoload');
 
 // Register the Composer autoloader...
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 // Handle all console commands...
 (new Console($argv))
