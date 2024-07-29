@@ -1,12 +1,11 @@
 <?php
 
-
 namespace PhpSlides\Http\Resources;
 
 use Exception;
 use PhpSlides\Http\Request;
-use PhpSlides\Http\ApiController;
 use PhpSlides\Controller\Controller;
+use PhpSlides\Interface\Http\ApiController;
 use PhpSlides\Interface\MiddlewareInterface;
 
 abstract class ApiResources extends Controller

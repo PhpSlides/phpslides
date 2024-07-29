@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace PhpSlides\Interface;
 
@@ -10,9 +8,9 @@ use PhpSlides\Route;
 /**
  *   -------------------------------------------------------------------------------
  *
- *   CREATE A NEW ROUTE
+ *   HANDLE WEB ROUTINGS
  *
- *   Create route & api that accept different methods and render to the client area
+ *   Create web routes that accept different methods and render to the client area
  *
  *   @author Dave Conco <concodave@gmail.com>
  *   @link https://github.com/dconco/php_slides

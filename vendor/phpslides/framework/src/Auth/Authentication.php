@@ -1,9 +1,8 @@
-<?php
-
+<?php declare(strict_types=1);
 
 namespace PhpSlides\Auth;
 
-class AuthHandler
+class Authentication
 {
 	private static $authorizationHeader;
 

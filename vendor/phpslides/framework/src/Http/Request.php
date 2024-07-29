@@ -1,12 +1,10 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace PhpSlides\Http;
 
 use stdClass;
-use PhpSlides\Auth\AuthHandler;
-use PhpSlides\Interface\RequestInterface;
+use PhpSlides\Auth\Authentication;
+use PhpSlides\Http\Interface\RequestInterface;
 
 /**
  * Class Request
@@ -20,7 +18,6 @@ class Request implements RequestInterface
 	 */
 	protected ?array $param;
 
-
 	/**
 	 * Request constructor.
 	 *
@@ -31,7 +28,6 @@ class Request implements RequestInterface
 		$this->param = $urlParam;
 	}
 
-
 	/**
 	 * Returns URL parameters as an object.
 	 *
@@ -41,7 +37,6 @@ class Request implements RequestInterface
 	{
 		return (object) $this->param;
 	}
-
 
 	/**
 	 * Parses and returns the query string parameters from the URL.
@@ -71,7 +66,6 @@ class Request implements RequestInterface
 		return $cl;
 	}
 
-
 	/**
 	 * Retrieves headers from the request.
 	 *
@@ -84,7 +78,6 @@ class Request implements RequestInterface
 		return !$name ? $headers : htmlspecialchars($headers[$name]);
 	}
 
-
 	/**
 	 * Retrieves authentication credentials from the request.
 	 *
@@ -93,12 +86,11 @@ class Request implements RequestInterface
 	public function Auth(): stdClass
 	{
 		$cl = new stdClass();
-		$cl->basic = AuthHandler::BasicAuthCredentials();
-		$cl->bearer = AuthHandler::BearerToken();
+		$cl->basic = Authentication::BasicAuthCredentials();
+		$cl->bearer = Authentication::BearerToken();
 
 		return $cl;
 	}
-
 
 	/**
 	 * Parses and returns the body of the request as an associative array.
@@ -109,8 +101,9 @@ class Request implements RequestInterface
 	{
 		$data = json_decode(file_get_contents('php://input'), true);
 
-		if ($data === null || json_last_error() !== JSON_ERROR_NONE)
+		if ($data === null || json_last_error() !== JSON_ERROR_NONE) {
 			return null;
+		}
 
 		$res = [];
 		foreach ($data as $key => $value) {
@@ -122,7 +115,6 @@ class Request implements RequestInterface
 		return $res;
 	}
 
-
 	/**
 	 * Retrieves a GET parameter by key.
 	 *
@@ -131,13 +123,13 @@ class Request implements RequestInterface
 	 */
 	public function get(string $key): ?string
 	{
-		if (!isset($_GET[$key]))
+		if (!isset($_GET[$key])) {
 			return null;
+		}
 
 		$data = trim(htmlspecialchars($_GET[$key]));
 		return $data;
 	}
-
 
 	/**
 	 * Retrieves a POST parameter by key.
@@ -147,13 +139,13 @@ class Request implements RequestInterface
 	 */
 	public function post(string $key): ?string
 	{
-		if (!isset($_POST[$key]))
+		if (!isset($_POST[$key])) {
 			return null;
+		}
 
 		$data = trim(htmlspecialchars($_POST[$key]));
 		return $data;
 	}
-
 
 	/**
 	 * Retrieves a request parameter by key from all input sources.
@@ -163,13 +155,13 @@ class Request implements RequestInterface
 	 */
 	public function request(string $key): ?string
 	{
-		if (!isset($_REQUEST[$key]))
+		if (!isset($_REQUEST[$key])) {
 			return null;
+		}
 
 		$data = trim(htmlspecialchars($_REQUEST[$key]));
 		return $data;
 	}
-
 
 	/**
 	 * Retrieves file data from the request by name.
@@ -179,13 +171,13 @@ class Request implements RequestInterface
 	 */
 	public function files(string $name): ?object
 	{
-		if (!isset($_FILES[$name]))
+		if (!isset($_FILES[$name])) {
 			return null;
+		}
 
 		$files = $_FILES[$name];
 		return (object) $files;
 	}
-
 
 	/**
 	 * Retrieves a cookie value by key, or all cookies if no key is provided.
@@ -195,11 +187,11 @@ class Request implements RequestInterface
 	 */
 	public function cookie(?string $key = null): string|object|null
 	{
-		if (!$key)
+		if (!$key) {
 			return (object) $_COOKIE;
+		}
 		return htmlspecialchars($_COOKIE[$key]);
 	}
-
 
 	/**
 	 * Retrieves the HTTP method used for the request.
@@ -211,7 +203,6 @@ class Request implements RequestInterface
 		return $_SERVER['REQUEST_METHOD'];
 	}
 
-
 	/**
 	 * Retrieves the URI from the request.
 	 *
@@ -219,9 +210,8 @@ class Request implements RequestInterface
 	 */
 	public function uri(): string
 	{
-		return urldecode($_REQUEST['uri']);
+		return urldecode($_SERVER['REQUEST_URI']);
 	}
-
 
 	/**
 	 * Parses and returns URL components including query and parameters.
@@ -239,7 +229,6 @@ class Request implements RequestInterface
 		return (object) $parsed;
 	}
 
-
 	/**
 	 * Retrieves the client's IP address.
 	 *
@@ -249,7 +238,6 @@ class Request implements RequestInterface
 	{
 		return $_SERVER['REMOTE_ADDR'];
 	}
-
 
 	/**
 	 * Retrieves the client's user agent string.
@@ -261,7 +249,6 @@ class Request implements RequestInterface
 		return $_SERVER['HTTP_USER_AGENT'];
 	}
 
-
 	/**
 	 * Checks if the request was made via AJAX.
 	 *
@@ -269,9 +256,9 @@ class Request implements RequestInterface
 	 */
 	public function isAjax(): bool
 	{
-		return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+		return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+			strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 	}
-
 
 	/**
 	 * Retrieves the URL of the referring page.
@@ -283,7 +270,6 @@ class Request implements RequestInterface
 		return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 	}
 
-
 	/**
 	 * Retrieves the server protocol used for the request.
 	 *
@@ -293,7 +279,6 @@ class Request implements RequestInterface
 	{
 		return $_SERVER['SERVER_PROTOCOL'];
 	}
-
 
 	/**
 	 * Retrieves all input data from GET, POST, and the request body.
@@ -306,7 +291,6 @@ class Request implements RequestInterface
 		return array_map('htmlspecialchars', $data);
 	}
 
-
 	/**
 	 * Retrieves a parameter from the $_SERVER array.
 	 *
@@ -317,7 +301,6 @@ class Request implements RequestInterface
 	{
 		return isset($_SERVER[$key]) ? $_SERVER[$key] : null;
 	}
-
 
 	/**
 	 * Checks if the request method matches a given method.
@@ -330,7 +313,6 @@ class Request implements RequestInterface
 		return strtoupper($this->method()) === strtoupper($method);
 	}
 
-
 	/**
 	 * Checks if the request is made over HTTPS.
 	 *
@@ -340,7 +322,6 @@ class Request implements RequestInterface
 	{
 		return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
 	}
-
 
 	/**
 	 * Retrieves the time when the request was made.

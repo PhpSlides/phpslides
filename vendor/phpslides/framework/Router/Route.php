@@ -5,8 +5,8 @@
  * It declares strict types and defines the namespace for the application.
  * It also imports the necessary classes and interfaces.
  *
- * @package PhpSlides
- * @version 1.2.1
+ * @package Router
+ * @version 1.2.2
  * @since 1.0.0
  * @link https://github.com/dconco/php_slides
  * @author Dave Conco <concodave@gmail.com>
@@ -16,10 +16,11 @@
 namespace PhpSlides;
 
 use Exception;
-use PhpSlides\Route\MapRoute;
-use PhpSlides\Resources\Resources;
 use PhpSlides\Controller\Controller;
+use PhpSlides\Foundation\Application;
+use PhpSlides\Resources\Resources;
 use PhpSlides\Interface\RouteInterface;
+use PhpSlides\MapRoute;
 
 /**
  *   -------------------------------------------------------------------------------
@@ -34,7 +35,7 @@ use PhpSlides\Interface\RouteInterface;
  *   @copyright 2023 - 2024 Dave Conco
  *   @package PhpSlides
  *   @version ^1.0.0
- *   @return void
+ *   @return self
  * |
  *
  *   -------------------------------------------------------------------------------
@@ -75,7 +76,8 @@ final class Route extends Resources implements RouteInterface
 	}
 
 	/**
-	 * Call all methods and initialize them
+	 * Call all non static methods
+	 * and initialize them
 	 */
 	public function __call($method, $args)
 	{
@@ -85,7 +87,7 @@ final class Route extends Resources implements RouteInterface
 	/**
 	 *   ------------------------------------------------------
 	 *   |
-	 *   |   Get the file extension content-type with mime
+	 *   Get the file extension content-type with mime
 	 *
 	 *   @param string $filename File path or file resources
 	 *   @return bool|string Returns the MIME content type for a file as determined by using information from the magic.mime file.
@@ -96,8 +98,9 @@ final class Route extends Resources implements RouteInterface
 	{
 		if (is_file($filename)) {
 			if (!extension_loaded('fileinfo')) {
+			   self::log();
 				throw new Exception(
-					'Fileinfo extension is not enabled. Please enable it in your php.ini configuration.',
+					'Fileinfo extension is not enabled. Please enable it in your php.ini configuration.'
 				);
 			}
 
@@ -353,7 +356,7 @@ final class Route extends Resources implements RouteInterface
 	public static function any(
 		array|string $route,
 		mixed $callback,
-		string $method = '*',
+		string $method = '*'
 	): void {
 		/**
 		 *   --------------------------------------------------------------
@@ -407,8 +410,8 @@ final class Route extends Resources implements RouteInterface
 					print_r(
 						self::controller(
 							$callback[0],
-							count($callback) > 1 ? $callback[1] : '',
-						),
+							count($callback) > 1 ? $callback[1] : ''
+						)
 					);
 				} else {
 					print_r(is_callable($callback) ? $callback() : $callback);
@@ -436,7 +439,7 @@ final class Route extends Resources implements RouteInterface
 		if (!empty(self::$request_uri)) {
 			$route = strtolower(preg_replace("/(^\/)|(\/$)/", '', $route));
 			$reqUri = strtolower(
-				preg_replace("/(^\/)|(\/$)/", '', self::$request_uri),
+				preg_replace("/(^\/)|(\/$)/", '', self::$request_uri)
 			);
 		} else {
 			$reqUri = '/';
@@ -521,12 +524,12 @@ final class Route extends Resources implements RouteInterface
 					self::controller(
 						$callback[0],
 						count($callback) > 1 ? $callback[1] : '',
-						$req_value,
-					),
+						$req_value
+					)
 				);
 			} else {
 				print_r(
-					is_callable($callback) ? $callback(...$req_value) : $callback,
+					is_callable($callback) ? $callback(...$req_value) : $callback
 				);
 			}
 
@@ -639,7 +642,7 @@ final class Route extends Resources implements RouteInterface
 	{
 		self::$view = [
 			'route' => $route,
-			'view' => $view,
+			'view' => $view
 		];
 
 		self::$route[] = $route;
@@ -662,7 +665,7 @@ final class Route extends Resources implements RouteInterface
 	public static function redirect(
 		string $route,
 		string $new_url,
-		int $code = 302,
+		int $code = 302
 	): void {
 		if (!empty(self::$request_uri)) {
 			$route = preg_replace("/(^\/)|(\/$)/", '', $route);
@@ -694,7 +697,7 @@ final class Route extends Resources implements RouteInterface
 		self::$method = [
 			'route' => $route,
 			'method' => 'GET',
-			'callback' => $callback,
+			'callback' => $callback
 		];
 
 		self::$route[] = $route;
@@ -715,7 +718,7 @@ final class Route extends Resources implements RouteInterface
 		self::$method = [
 			'route' => $route,
 			'method' => 'POST',
-			'callback' => $callback,
+			'callback' => $callback
 		];
 
 		self::$route[] = $route;
@@ -736,7 +739,7 @@ final class Route extends Resources implements RouteInterface
 		self::$method = [
 			'route' => $route,
 			'method' => 'PUT',
-			'callback' => $callback,
+			'callback' => $callback
 		];
 
 		self::$route[] = $route;
@@ -757,7 +760,7 @@ final class Route extends Resources implements RouteInterface
 		self::$method = [
 			'route' => $route,
 			'method' => 'PATCH',
-			'callback' => $callback,
+			'callback' => $callback
 		];
 
 		self::$route[] = $route;
@@ -778,7 +781,7 @@ final class Route extends Resources implements RouteInterface
 		self::$method = [
 			'route' => $route,
 			'method' => 'DELETE',
-			'callback' => $callback,
+			'callback' => $callback
 		];
 
 		self::$route[] = $route;
@@ -809,60 +812,6 @@ final class Route extends Resources implements RouteInterface
 
 		if (self::$view !== null) {
 			self::__view();
-		}
-	}
-}
-
-/**
- *   --------------------------------------------------------------
- *
- *   |   Router View
- *
- *   Which control the public URL and validating.
- *   This class is used in rendering views and parsing public URL in views.
- *
- *   --------------------------------------------------------------
- */
-final class view extends Controller
-{
-	/**
-	 *   --------------------------------------------------------------
-	 *
-	 *   |   Render views and parse public URL in views
-	 *
-	 * @param string $view
-	 * @return mixed return the file gotten from the view parameters
-	 *
-	 *   --------------------------------------------------------------
-	 */
-	final public static function render(string $view): mixed
-	{
-		try {
-			// split :: into array and extract the folder and files
-			$file = preg_replace('/(::)|::/', '/', $view);
-			$file = strtolower(trim($file, '\/\/'));
-			$view_path = '/views/' . $file;
-
-			$file_uri = Route::$root_dir . $view_path;
-
-			if (
-				is_file($file_uri . '.view.php') &&
-				!preg_match('/(..\/)/', $view)
-			) {
-				$file_type = Route::file_type($file_uri . '.view.php');
-				header("Content-Type: $file_type");
-
-				return self::slides_include($file_uri . '.view.php');
-			} elseif (is_file($file_uri) && !preg_match('/(..\/)/', $view)) {
-				$file_type = Route::file_type($file_uri);
-				header("Content-Type: $file_type");
-
-				return self::slides_include($file_uri);
-			} else {
-				throw new Exception("No view file path found called `$view`");
-			}
-		} catch (Exception $e) {
-			exit($e->getMessage());
 		}
 	}
 }

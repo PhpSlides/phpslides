@@ -1,9 +1,8 @@
 <?php
 
-
 declare(strict_types=1);
 
-namespace PhpSlides\Interface;
+namespace PhpSlides\Routes;
 
 /**
  * undocumented class
