@@ -4,16 +4,16 @@ namespace PhpSlides\Http;
 
 use Exception;
 use PhpSlides\Routes\MapRoute;
-use PhpSlides\Interface\ApiInterface;
+use PhpSlides\Http\Interface\ApiInterface;
 use PhpSlides\Http\Resources\ApiResources;
 
 /**
  * The Api class provides a fluent interface to define API routes,
  * apply middleware, and manage route mapping.
  *
- * @since 1.2.2
  * @category API
  * @license MIT
+ * @since 1.2.2
  * @version 1.2.2
  * @author Dave Conco <concodave@gmail.com>
  */

@@ -1,6 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpSlides\Router;
+namespace PhpSlides;
+
+use Exception;
+use PhpSlides\Foundation\Application;
+use PhpSlides\Controller\Controller;
+use PhpSlides\Traits\FileHandler;
+use PhpSlides\Logger\Logger;
 
 /**
  *   --------------------------------------------------------------
@@ -14,6 +20,8 @@ namespace PhpSlides\Router;
  */
 final class view extends Controller
 {
+	use Logger, FileHandler;
+
 	/**
 	 *   --------------------------------------------------------------
 	 *
@@ -26,32 +34,24 @@ final class view extends Controller
 	 */
 	final public static function render(string $view): mixed
 	{
-		try {
-			// split :: into array and extract the folder and files
-			$file = preg_replace('/(::)|::/', '/', $view);
-			$file = strtolower(trim($file, '\/\/'));
-			$view_path = '/views/' . $file;
+		// split :: into array and extract the folder and files
+		$file = preg_replace('/(::)|::/', '/', $view);
+		$file = strtolower(trim($file, '\/\/'));
+		$file_uri = Application::$viewsDir . $file;
 
-			$file_uri = Route::$root_dir . $view_path;
+		if (is_file($file_uri . '.view.php') && !preg_match('/(..\/)/', $view)) {
+			$file_type = self::file_type($file_uri . '.view.php');
+			header("Content-Type: $file_type");
 
-			if (
-				is_file($file_uri . '.view.php') &&
-				!preg_match('/(..\/)/', $view)
-			) {
-				$file_type = Route::file_type($file_uri . '.view.php');
-				header("Content-Type: $file_type");
+			return self::slides_include($file_uri . '.view.php');
+		} elseif (is_file($file_uri) && !preg_match('/(..\/)/', $view)) {
+			$file_type = self::file_type($file_uri);
+			header("Content-Type: $file_type");
 
-				return self::view($file_uri . '.view.php');
-			} elseif (is_file($file_uri) && !preg_match('/(..\/)/', $view)) {
-				$file_type = Route::file_type($file_uri);
-				header("Content-Type: $file_type");
-
-				return self::slides_include($file_uri);
-			} else {
-				throw new Exception("No view file path found called `$view`");
-			}
-		} catch (Exception $e) {
-			exit($e->getMessage());
+			return self::slides_include($file_uri);
+		} else {
+			self::log();
+			throw new Exception("No view file path found called `$file_uri`");
 		}
 	}
 }

@@ -1,10 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
-
-namespace PhpSlides\Routes;
+namespace PhpSlides;
 
 use PhpSlides\Controller\Controller;
+use PhpSlides\Interface\MapInterface;
 
 /**
  * Map Configuration
@@ -35,7 +34,11 @@ class MapRoute extends Controller implements MapInterface
 		 */
 		if (!empty($_SERVER['REQUEST_URI'])) {
 			self::$request_uri = strtolower(
-				preg_replace("/(^\/)|(\/$)/", '', urldecode($_SERVER['REQUEST_URI']))
+				preg_replace(
+					"/(^\/)|(\/$)/",
+					'',
+					urldecode($_SERVER['REQUEST_URI'])
+				)
 			);
 		} else {
 			self::$request_uri = '/';

@@ -8,7 +8,7 @@ use PhpSlides\Foundation\Application;
 
 trait Logger
 {
-	public static function log(): void
+	protected static function log(): void
 	{
 		$log_path = Application::$basePath . 'requests.log';
 
@@ -20,7 +20,7 @@ trait Logger
 		$method = $_SERVER['REQUEST_METHOD'];
 
 		// get request url
-		$uri = '/' . urldecode($_SERVER['REQUEST_URI']);
+		$uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
 		// get status response code for each request
 		$http_code = http_response_code();
@@ -28,8 +28,11 @@ trait Logger
 		// protocol code for request header
 		$http_protocol = $_SERVER['SERVER_PROTOCOL'];
 
+		// get remote address
+		$remote_addr = $_SERVER['REMOTE_ADDR'];
+
 		// all content messages to log
-		$content = "[$date]  $method  $http_protocol  $http_code  $uri\n";
+		$content = "[$date] $remote_addr $method $uri $http_protocol $http_code\n";
 
 		if (Route::$log === true) {
 			$log = fopen($log_path, 'a');

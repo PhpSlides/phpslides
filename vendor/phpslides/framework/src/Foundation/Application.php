@@ -102,7 +102,7 @@ class Application implements ApplicationInterface
 		$loader->load(__DIR__ . '/../Config/env.config.php');
 		$loader->load(__DIR__ . '/../Config/config.php');
 
-		Route::config(getenv('APP_DEBUG') ?? true);
+		Route::config((bool) (getenv('APP_DEBUG') ?? true));
 		$loader
 			->load(__DIR__ . '/../Functions/Functions.php')
 			->load(self::$apiPath)

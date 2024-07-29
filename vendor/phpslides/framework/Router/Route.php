@@ -18,8 +18,9 @@ namespace PhpSlides;
 use Exception;
 use PhpSlides\Controller\Controller;
 use PhpSlides\Foundation\Application;
-use PhpSlides\Resources\Resources;
 use PhpSlides\Interface\RouteInterface;
+use PhpSlides\Resources\Resources;
+use PhpSlides\Traits\FileHandler;
 use PhpSlides\MapRoute;
 
 /**
@@ -43,6 +44,8 @@ use PhpSlides\MapRoute;
 
 final class Route extends Resources implements RouteInterface
 {
+	use FileHandler;
+
 	/**
 	 *  `$log` method prints logs in `.log` file in the root of the project each time any request has been received, when setted to true.
 	 *   It's been setted to true by default, can be changed anytime.
@@ -85,91 +88,6 @@ final class Route extends Resources implements RouteInterface
 	}
 
 	/**
-	 *   ------------------------------------------------------
-	 *   |
-	 *   Get the file extension content-type with mime
-	 *
-	 *   @param string $filename File path or file resources
-	 *   @return bool|string Returns the MIME content type for a file as determined by using information from the magic.mime file.
-	 *   |
-	 *   ------------------------------------------------------
-	 */
-	public static function file_type(string $filename): bool|string
-	{
-		if (is_file($filename)) {
-			if (!extension_loaded('fileinfo')) {
-			   self::log();
-				throw new Exception(
-					'Fileinfo extension is not enabled. Please enable it in your php.ini configuration.'
-				);
-			}
-
-			$file_info = finfo_open(FILEINFO_MIME_TYPE);
-			$file_type = finfo_file($file_info, $filename);
-			finfo_close($file_info);
-
-			$file_ext = explode('.', $filename);
-			$file_ext = strtolower(end($file_ext));
-
-			if (
-				$file_type === 'text/plain' ||
-				$file_type === 'application/x-empty' ||
-				$file_type === 'application/octet-stream'
-			) {
-				switch ($file_ext) {
-					case 'css':
-						return 'text/css';
-					case 'txt':
-						return 'text/plain';
-					case 'csv':
-						return 'text/csv';
-					case 'htm':
-						return 'text/htm';
-					case 'html':
-						return 'text/html';
-					case 'php':
-						return 'text/html';
-					case 'xml':
-						return 'text/xml';
-					case 'js':
-						return 'application/javascript';
-					case 'pdf':
-						return 'application/pdf';
-					case 'doc':
-						return 'application/msword';
-					case 'docx':
-						return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-					case 'xls':
-						return 'application/vnd.ms-excel';
-					case 'xlsx':
-						return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-					case 'json':
-						return 'application/json';
-					case 'md':
-						return 'text/markdown';
-					case 'ppt':
-						return 'application/mspowerpoint';
-					case 'pptx':
-						return 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
-					case 'swf':
-						return 'application/x-shockwave-flash';
-					case 'ai':
-						return 'application/postscript';
-					case 'odt':
-						return 'application/vnd.oasis.opendocument.text';
-
-					default:
-						return $file_type;
-				}
-			} else {
-				return $file_type;
-			}
-		} else {
-			return false;
-		}
-	}
-
-	/**
 	 *   ---------------------------------------------------------------------------------------------------------
 	 *
 	 *   |   If `$request_log` is set to true, it prints logs in `.log` file in the root of the project each time any request has been received.
@@ -191,8 +109,8 @@ final class Route extends Resources implements RouteInterface
 	{
 		try {
 			self::$log = $request_log;
-			self::$root_dir = dirname(getcwd());
-			self::$request_uri = urldecode($_REQUEST['uri']);
+			self::$root_dir = Application::$basePath;
+			self::$request_uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
 			$dir = self::$root_dir;
 			$req = preg_replace("/(^\/)|(\/$)/", '', self::$request_uri);
@@ -432,7 +350,7 @@ final class Route extends Resources implements RouteInterface
 		/**
 		 *   ----------------------------------------------
 		 *   |   Replacing first and last forward slashes
-		 *   |   $_REQUEST['uri'] will be empty if req uri is /
+		 *   |   $_SERVER['REQUEST_URI'] will be empty if req uri is /
 		 *   ----------------------------------------------
 		 */
 
@@ -460,7 +378,7 @@ final class Route extends Resources implements RouteInterface
 
 		/**
 		 *   ----------------------------------------------------------------------------------
-		 *   |   Exploding request uri string to array to get the exact index number value of parameter from $_REQUEST['uri']
+		 *   |   Exploding request uri string to array to get the exact index number value of parameter from $_SERVER['REQUEST_URI']
 		 *   ----------------------------------------------------------------------------------
 		 */
 		$reqUri = explode('/', $reqUri);
@@ -599,7 +517,7 @@ final class Route extends Resources implements RouteInterface
 	}
 
 	/**
-	 * file method
+	 * `file` method
 	 * return view file directly
 	 *
 	 * @param string $file
@@ -613,7 +531,8 @@ final class Route extends Resources implements RouteInterface
 	}
 
 	/**
-	 * Middleware
+	 * Add Middlewares.
+	 * Middleware must be verified before redirecting to the specific Controller.
 	 */
 	public function middleware(array $middleware): self
 	{
@@ -626,14 +545,14 @@ final class Route extends Resources implements RouteInterface
 	/**
 	 *   ---------------------------------------------------------------------------
 	 *
-	 *   |   VIEW ROUTE METHOD
+	 *   VIEW ROUTE METHOD
 	 *
-	 *   |   Route only needs to return a view; you may provide an array for multiple request
+	 *   Route only needs to return a view; you may provide an array for multiple request
 	 *
-	 *   |   View Route does not accept `{?} URL parameters` in route, use GET method instead
+	 *   View Route does not accept `{?} URL parameters` in route, use GET method instead
 	 *
-	 *           @param array|string $route This describes the URL string to render, use array of strings for multiple request
-	 *           @param string $view It renders this param, it can be functions to render, view:: to render or strings of text or documents
+	 *   @param array|string $route This describes the URL string to render, use array of strings for multiple request
+	 *   @param string $view It renders this param, it can be functions to render, view:: to render or strings of text or documents
 	 *   |
 	 *
 	 *   ---------------------------------------------------------------------------
@@ -652,9 +571,9 @@ final class Route extends Resources implements RouteInterface
 	/**
 	 *   --------------------------------------------------------------
 	 *
-	 *   |   REDIRECT ROUTE METHOD
+	 *   REDIRECT ROUTE METHOD
 	 *
-	 *   |   This method redirects the routes URL to the giving URL directly
+	 *   This method redirects the routes URL to the giving URL directly
 	 *
 	 *   @param string $route The requested url to redirect
 	 *   @param string $new_url The new URL route to redirect to
@@ -677,8 +596,9 @@ final class Route extends Resources implements RouteInterface
 		}
 
 		if (strtolower($reqUri) === strtolower($route)) {
-			header("Location: $new_url", true, $code);
+			http_response_code($code);
 			self::log();
+			header("Location: $new_url", true, $code);
 			exit();
 		}
 	}
@@ -686,9 +606,9 @@ final class Route extends Resources implements RouteInterface
 	/**
 	 *   --------------------------------------------------------------
 	 *
-	 *   |   GET ROUTE METHOD
+	 *   GET ROUTE METHOD
 	 *
-	 *   |   Cannot evaluate {?} URL parameters in route if it's an array
+	 *   Cannot evaluate {?} URL parameters in route if it's an array
 	 *
 	 *   --------------------------------------------------------------
 	 */
@@ -707,9 +627,9 @@ final class Route extends Resources implements RouteInterface
 	/**
 	 *   --------------------------------------------------------------
 	 *
-	 *   |   POST ROUTE METHOD
+	 *   POST ROUTE METHOD
 	 *
-	 *   |   Cannot evaluate {?} URL parameters in route if it's an array
+	 *   Cannot evaluate {?} URL parameters in route if it's an array
 	 *
 	 *   --------------------------------------------------------------
 	 */
@@ -728,9 +648,9 @@ final class Route extends Resources implements RouteInterface
 	/**
 	 *   --------------------------------------------------------------
 	 *
-	 *   |   PUT ROUTE METHOD
+	 *   PUT ROUTE METHOD
 	 *
-	 *   |   Cannot evaluate {?} URL parameters in route if it's an array
+	 *   Cannot evaluate {?} URL parameters in route if it's an array
 	 *
 	 *   --------------------------------------------------------------
 	 */
@@ -749,9 +669,9 @@ final class Route extends Resources implements RouteInterface
 	/**
 	 *   --------------------------------------------------------------
 	 *
-	 *   |   PATCH ROUTE METHOD
+	 *   PATCH ROUTE METHOD
 	 *
-	 *   |   Cannot evaluate {?} URL parameters in route if it's an array
+	 *   Cannot evaluate {?} URL parameters in route if it's an array
 	 *
 	 *   --------------------------------------------------------------
 	 */
@@ -770,9 +690,9 @@ final class Route extends Resources implements RouteInterface
 	/**
 	 *   --------------------------------------------------------------
 	 *
-	 *   |   DELETE ROUTE METHOD
+	 *   DELETE ROUTE METHOD
 	 *
-	 *   |   Cannot evaluate {?} URL parameters in route if it's an array
+	 *   Cannot evaluate {?} URL parameters in route if it's an array
 	 *
 	 *   --------------------------------------------------------------
 	 */

@@ -1,9 +1,9 @@
 <?php
 
 use PhpSlides\Controller\RouteController;
+use PhpSlides\Loader\ViewLoader;
 
 define('__ROOT__', dirname(__DIR__));
-define('APP_DEBUG', getenv('APP_DEBUG', true));
 
 const GET = 'GET';
 const PUT = 'PUT';
@@ -12,7 +12,6 @@ const PATCH = 'PATCH';
 const DELETE = 'DELETE';
 const RELATIVE_PATH = 'path';
 const ROOT_RELATIVE_PATH = 'root_path';
-const SLIDES_VERSION = '1.2.2';
 
 /**
  *    -----------------------------------------------------------
@@ -22,10 +21,10 @@ const SLIDES_VERSION = '1.2.2';
  *   |
  *    -----------------------------------------------------------
  */
-function slides_include ($filename)
+function slides_include($filename)
 {
-	$output = RouteController::slides_include($filename);
-	return $output;
+	$loaded = (new ViewLoader())->load($filename);
+	return $loaded->getLoad();
 }
 
 $routes = [];
@@ -37,7 +36,7 @@ $routes = [];
  * @param string|array $value Named route value
  * @return void
  */
-function add_route_name (string $name, string|array $value): void
+function add_route_name(string $name, string|array $value): void
 {
 	global $routes;
 	$routes[$name] = $value;
@@ -51,92 +50,71 @@ function add_route_name (string $name, string|array $value): void
  *
  * @return array|object|string returns the route value
  */
-function route (
- string|null $name = null,
- array|null $param = null,
+function route(
+	string|null $name = null,
+	array|null $param = null
 ): array|object|string {
 	global $routes;
 
-	if ($name === null)
-	{
+	if ($name === null) {
 		$route_class = new stdClass();
 
-		foreach ($routes as $key => $value)
-		{
-			if (preg_match_all('/(?<={).+?(?=})/', $value))
-			{
-				$route_class->$key = function (string ...$args) use ($routes, $value, $key, )
-				{
+		foreach ($routes as $key => $value) {
+			if (preg_match_all('/(?<={).+?(?=})/', $value)) {
+				$route_class->$key = function (string ...$args) use (
+					$routes,
+					$value,
+					$key
+				) {
 					$route = '';
 
-					if (count($args) === 0)
-					{
+					if (count($args) === 0) {
 						$route = $routes[$key];
-					}
-					else
-					{
-						for ($i = 0; $i < count($args); $i++)
-						{
-							if ($i === 0)
-							{
+					} else {
+						for ($i = 0; $i < count($args); $i++) {
+							if ($i === 0) {
 								$route = preg_replace(
-								 '/\{[^}]+\}/',
-								 $args[$i],
-								 $value,
-								 1,
+									'/\{[^}]+\}/',
+									$args[$i],
+									$value,
+									1
 								);
-							}
-							else
-							{
+							} else {
 								$route = preg_replace(
-								 '/\{[^}]+\}/',
-								 $args[$i],
-								 $route,
-								 1,
+									'/\{[^}]+\}/',
+									$args[$i],
+									$route,
+									1
 								);
 							}
 						}
 					}
 					return $route;
 				};
-			}
-			else
-			{
+			} else {
 				$route_class->$key = $value;
 			}
 		}
 
 		return $route_class;
-	}
-	else
-	{
-		if (!array_key_exists($name, $routes))
-		{
+	} else {
+		if (!array_key_exists($name, $routes)) {
 			return '';
-		}
-		else
-		{
-			if ($param === null)
-			{
+		} else {
+			if ($param === null) {
 				return $routes[$name];
-			}
-			else
-			{
+			} else {
 				$route = '';
 
-				for ($i = 0; $i < count($param); $i++)
-				{
-					if ($i === 0)
-					{
+				for ($i = 0; $i < count($param); $i++) {
+					if ($i === 0) {
 						$route = preg_replace(
-						 '/\{[^}]+\}/',
-						 $param[$i],
-						 $routes[$name],
-						 1,
+							'/\{[^}]+\}/',
+							$param[$i],
+							$routes[$name],
+							1
 						);
-					}
-					else
-					{
+					} else {
 						$route = preg_replace('/\{[^}]+\}/', $param[$i], $route, 1);
 					}
 				}
@@ -152,33 +130,31 @@ function route (
  * @param string $filename The name of the file to get from public directory
  * @param string $path_type Path to start location which uses either `RELATIVE_PATH` for path `../` OR `ROOT_RELATIVE_PATH` for root `/`
  */
-function asset (string $filename, $path_type = RELATIVE_PATH): string
+function asset(string $filename, $path_type = RELATIVE_PATH): string
 {
 	$filename = preg_replace('/(::)|::/', '/', $filename);
 	$filename = strtolower(trim($filename, '\/\/'));
 
 	$path = './';
-	if (!empty(urldecode($_REQUEST['uri'])))
-	{
-		$reqUri = explode('/', trim(urldecode($_REQUEST['uri']), '/'));
+	if (!empty(urldecode($_SERVER['REQUEST_URI']))) {
+		$reqUri = explode('/', trim(urldecode($_SERVER['REQUEST_URI']), '/'));
 
-		for ($i = 0; $i < count($reqUri); $i++)
-		{
+		for ($i = 0; $i < count($reqUri); $i++) {
 			$path .= '../';
 		}
 	}
 
-	$find = '/src/autoload.php';
+	$find = '/src/bootstrap/app.php';
 	$self = $_SERVER['PHP_SELF'];
+	//exit('hh');
 	$root_path = substr_replace(
-	 $self,
-	 '/',
-	 strrpos($self, $find),
-	 strlen($find),
+		$self,
+		'/',
+		strrpos($self, $find),
+		strlen($find)
 	);
 
-	switch ($path_type)
-	{
+	switch ($path_type) {
 		case RELATIVE_PATH:
 			return $path . $filename;
 		case ROOT_RELATIVE_PATH:

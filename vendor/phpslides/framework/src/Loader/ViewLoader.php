@@ -63,7 +63,7 @@ class ViewLoader
 				$path = trim($matches[1]);
 				return "<? slides_include(__DIR__ . '/$path') ?>";
 			},
-			$file_contents
+			$contents
 		);
 
 		// replace <? elements
