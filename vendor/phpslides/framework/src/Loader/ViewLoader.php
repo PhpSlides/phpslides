@@ -15,7 +15,7 @@ class ViewLoader
 			// get and make generated file name & directory
 			$gen_file = explode('/', $viewFile);
 			$new_name = explode('.', end($gen_file), 2);
-			$new_name = $new_name[0] . '.generated.' . $new_name[1];
+			$new_name = ucfirst($new_name[0]) . '.g.' . $new_name[1];
 
 			$gen_file[count($gen_file) - 1] = $new_name;
 			$gen_file = implode('/', $gen_file);
@@ -84,10 +84,10 @@ class ViewLoader
 			 $val = trim($matches[1]);
 			 $val = trim($val, ';');
 			 return '<' . '?php print_r(' . $val . ') ?>';
-		 },
-		 $formattedContents
-		);
+},
+$formattedContents
+);
 
-		return $formattedContents;
-	}
+return $formattedContents;
+}
 }
