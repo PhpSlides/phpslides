@@ -3,8 +3,8 @@
 namespace PhpSlides\Foundation;
 
 use PhpSlides\Route;
-use PhpSlides\Interface\ApplicationInterface;
 use PhpSlides\Loader\FileLoader;
+use PhpSlides\Interface\ApplicationInterface;
 
 /**
  * The Application class is the foundation of the PhpSlides project
@@ -71,18 +71,20 @@ class Application implements ApplicationInterface
 	 * @param string $basePath The base path of the application.
 	 * @return self Returns an instance of the Application class.
 	 */
-	public static function configure(string $basePath): self
+	public static function configure (string $basePath): self
 	{
 		self::$basePath = rtrim($basePath, '/') . '/';
 
-		if (php_sapi_name() == 'cli-server') {
+		if (php_sapi_name() == 'cli-server')
+		{
 			self::$request_uri = urldecode($_SERVER['REQUEST_URI']);
-		} else {
+		}
+		else
+		{
 			self::$request_uri = urldecode(
-				$_REQUEST['uri'] ?? $_SERVER['REQUEST_URI']
+			 $_REQUEST['uri'] ?? $_SERVER['REQUEST_URI']
 			);
 		}
-		exit(self::$request_uri);
 
 		return new self();
 	}
@@ -94,7 +96,7 @@ class Application implements ApplicationInterface
 	 * @param string $web The path for web routes.
 	 * @return self Returns the current instance of the Application class.
 	 */
-	public function routing(string $api, string $web): self
+	public function routing (string $api, string $web): self
 	{
 		self::$apiPath = $api;
 		self::$webPath = $web;
@@ -112,7 +114,7 @@ class Application implements ApplicationInterface
 	 *
 	 * @return void
 	 */
-	public function create(): void
+	public function create (): void
 	{
 		$loader = new FileLoader();
 		$loader->load(__DIR__ . '/../Config/env.config.php');
@@ -120,8 +122,8 @@ class Application implements ApplicationInterface
 
 		Route::config((bool) (getenv('APP_DEBUG') ?? true));
 		$loader
-			->load(__DIR__ . '/../Globals/Functions.php')
-			->load(self::$apiPath)
-			->load(self::$webPath);
+		 ->load(__DIR__ . '/../Globals/Functions.php')
+		 ->load(self::$apiPath)
+		 ->load(self::$webPath);
 	}
 }

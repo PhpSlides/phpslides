@@ -10,7 +10,7 @@ use PhpSlides\Controller\Controller;
 use PhpSlides\Foundation\Application;
 use PhpSlides\Interface\MiddlewareInterface;
 
-abstract class Resources extends Controller
+class Resources extends Controller
 {
 	protected static mixed $action = null;
 
@@ -35,7 +35,7 @@ abstract class Resources extends Controller
 	 */
 	protected static string $request_uri;
 
-	protected static function __method(): void
+	protected static function __method (): void
 	{
 		$route = self::$method['route'];
 		$method = self::$method['method'];
@@ -44,7 +44,7 @@ abstract class Resources extends Controller
 		Route::any($route, $callback, $method);
 	}
 
-	protected static function __view(): void
+	protected static function __view (): void
 	{
 		$route = self::$view['route'];
 		$view = self::$view['view'];
@@ -58,20 +58,26 @@ abstract class Resources extends Controller
 		$uri = [];
 		$str_route = '';
 		$reqUri = strtolower(
-			preg_replace("/(^\/)|(\/$)/", '', self::$request_uri)
+		 preg_replace("/(^\/)|(\/$)/", '', self::$request_uri)
 		);
 
-		if (is_array($route)) {
-			for ($i = 0; $i < count($route); $i++) {
+		if (is_array($route))
+		{
+			for ($i = 0; $i < count($route); $i++)
+			{
 				$each_route = preg_replace("/(^\/)|(\/$)/", '', $route[$i]);
 				array_push($uri, strtolower($each_route));
 			}
-		} else {
+		}
+		else
+		{
 			$str_route = strtolower(preg_replace("/(^\/)|(\/$)/", '', $route));
 		}
 
-		if (in_array($reqUri, $uri) || $reqUri === $str_route) {
-			if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'GET') {
+		if (in_array($reqUri, $uri) || $reqUri === $str_route)
+		{
+			if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'GET')
+			{
 				http_response_code(405);
 				self::log();
 				exit('Method Not Allowed');
@@ -84,7 +90,7 @@ abstract class Resources extends Controller
 		}
 	}
 
-	protected function __middleware(): void
+	protected function __middleware (): void
 	{
 		$use = self::$use;
 		$file = self::$use;
@@ -97,59 +103,80 @@ abstract class Resources extends Controller
 		$params = self::$map_info['params'] ?? null;
 		$request = new Request($params);
 
-		for ($i = 0; $i < count((array) $middleware); $i++) {
+		for ($i = 0; $i < count((array) $middleware); $i++)
+		{
 			include_once Application::$configsDir . 'middleware.php';
 
-			if (array_key_exists($middleware[$i], $middlewares)) {
+			if (array_key_exists($middleware[$i], $middlewares))
+			{
 				$middleware = $middlewares[$middleware[$i]];
-			} else {
+			}
+			else
+			{
 				self::log();
 				throw new Exception(
-					'No Registered Middleware as `' . $middleware[$i] . '`'
+				 'No Registered Middleware as `' . $middleware[$i] . '`'
 				);
 			}
 
-			if (!class_exists($middleware)) {
+			if (!class_exists($middleware))
+			{
 				self::log();
 				throw new Exception(
-					"Middleware class does not exist: `{$middleware}`"
+				 "Middleware class does not exist: `{$middleware}`"
 				);
 			}
 			$mw = new $middleware();
 
-			if ($mw instanceof MiddlewareInterface) {
-				$next = function () use ($use, $file, $action, $view, $method) {
-					if ($use !== null) {
+			if ($mw instanceof MiddlewareInterface)
+			{
+				$next = function () use ($use, $file, $action, $view, $method)
+				{
+					if ($use !== null)
+					{
 						self::__use();
-					} elseif ($file !== null) {
+					}
+					elseif ($file !== null)
+					{
 						self::__file();
-					} elseif ($action !== null) {
+					}
+					elseif ($action !== null)
+					{
 						self::__action();
-					} elseif ($view !== null) {
+					}
+					elseif ($view !== null)
+					{
 						self::__view();
-					} elseif ($method !== null) {
+					}
+					elseif ($method !== null)
+					{
 						self::__method();
-					} else {
+					}
+					else
+					{
 						self::log();
 						throw new Exception('Cannot use middleware with this method');
 					}
 				};
 
 				$mw->handle($request, $next);
-			} else {
+			}
+			else
+			{
 				self::log();
 				throw new Exception(
-					'Middleware class must implements `MiddlewareInterface`'
+				 'Middleware class must implements `MiddlewareInterface`'
 				);
 			}
 		}
 	}
 
-	protected function __file(): void
+	protected function __file (): void
 	{
 		$file = self::$file;
 
-		if (array_key_exists('params', self::$map_info)) {
+		if (array_key_exists('params', self::$map_info))
+		{
 			$GLOBALS['params'] = self::$map_info['params'];
 
 			print_r(view::render($file));
@@ -158,33 +185,40 @@ abstract class Resources extends Controller
 		}
 	}
 
-	protected function __use(): void
+	protected function __use (): void
 	{
 		$controller = self::$use;
 
-		if (!preg_match('/(?=.*Controller)(?=.*::)/', $controller)) {
+		if (!preg_match('/(?=.*Controller)(?=.*::)/', $controller))
+		{
 			self::log();
 			throw new Exception(
-				'Parameter $controller must match Controller named rule.'
+			 'Parameter $controller must match Controller named rule.'
 			);
 		}
 
-		[$c_name, $c_method] = explode('::', $controller);
+		[ $c_name, $c_method ] = explode('::', $controller);
 
 		$cc = 'App\\Controllers\\' . $c_name;
 
-		if (class_exists($cc)) {
-			if (array_key_exists('params', self::$map_info)) {
+		if (class_exists($cc))
+		{
+			if (array_key_exists('params', self::$map_info))
+			{
 				$GLOBALS['params'] = self::$map_info['params'];
 				$params_value = self::$map_info['params_value'];
 
 				$cc = new $cc();
 				print_r($cc->$c_method(...$params_value));
-			} else {
+			}
+			else
+			{
 				$cc = new $cc();
 				print_r($cc->$c_method());
 			}
-		} else {
+		}
+		else
+		{
 			self::log();
 			throw new Exception("No class controller found as: `$cc`");
 		}
@@ -193,30 +227,43 @@ abstract class Resources extends Controller
 		exit();
 	}
 
-	protected function __action(): void
+	protected function __action (): void
 	{
 		$action = self::$action;
 
-		if (array_key_exists('params', self::$map_info)) {
+		if (array_key_exists('params', self::$map_info))
+		{
 			$GLOBALS['params'] = self::$map_info['params'];
 			$params_value = self::$map_info['params_value'];
 
-			if (is_callable($action)) {
+			if (is_callable($action))
+			{
 				$a = $action(...$params_value);
 				print_r($a);
-			} elseif (preg_match('/(?=.*Controller)(?=.*::)/', $action)) {
+			}
+			elseif (preg_match('/(?=.*Controller)(?=.*::)/', $action))
+			{
 				self::$use = $action;
 				$this->__use();
-			} else {
+			}
+			else
+			{
 				print_r($action);
 			}
-		} else {
-			if (is_callable($action)) {
+		}
+		else
+		{
+			if (is_callable($action))
+			{
 				print_r($action());
-			} elseif (preg_match('/(?=.*Controller)(?=.*::)/', $action)) {
+			}
+			elseif (preg_match('/(?=.*Controller)(?=.*::)/', $action))
+			{
 				self::$use = $action;
 				$this->__use();
-			} else {
+			}
+			else
+			{
 				print_r($action);
 			}
 		}

@@ -25,6 +25,18 @@ use Closure;
 interface RouteInterface
 {
 	/**
+	 *   ------------------------------------------------------
+	 *   |
+	 *   Get the file extension content-type with mime
+	 *
+	 *   @param string $filename File path or file resources
+	 *   @return bool|string Returns the MIME content type for a file as determined by using information from the magic.mime file.
+	 *   |
+	 *   ------------------------------------------------------
+	 */
+	public static function file_type (string $filename): bool|string;
+
+	/**
 	 *   ---------------------------------------------------------------------------------------------------------
 	 *
 	 *   If `$request_log` is set to true, it prints logs in `.log` file in the root of the project each time any request has been received.
@@ -42,7 +54,7 @@ interface RouteInterface
 	 *
 	 *   ---------------------------------------------------------------------------------------------------------
 	 */
-	public static function config(bool $request_log = true): void;
+	public static function config (bool $request_log): void;
 
 	/**
 	 *   ------------------------------------------------------------------------
@@ -59,10 +71,10 @@ interface RouteInterface
 	 *
 	 *   ------------------------------------------------------------------------
 	 */
-	public static function any(
-		array|string $route,
-		mixed $callback,
-		string $method = '*'
+	public static function any (
+	 array|string $route,
+	 mixed $callback,
+	 string $method = '*',
 	): void;
 
 	/**
@@ -73,7 +85,7 @@ interface RouteInterface
 	 * @param string|array $method Can also be used as `$route` param if the `$route` param is not specified
 	 * @param string|array|null $route Route parameter
 	 */
-	public static function map(string|array $method, string|array $route): self;
+	public static function map (string|array $method, string|array $route): self;
 
 	/**
 	 * name METHOD
@@ -81,7 +93,7 @@ interface RouteInterface
 	 *
 	 * @param string $name
 	 */
-	public function name(string $name): self;
+	public function name (string $name): self;
 
 	/**
 	 * Action method
@@ -89,7 +101,7 @@ interface RouteInterface
 	 *
 	 * @param mixed $callback
 	 */
-	public function action(mixed $callback): self;
+	public function action (mixed $callback): self;
 
 	/**
 	 * Controller method
@@ -106,7 +118,7 @@ interface RouteInterface
 	 *
 	 * @param string $file
 	 */
-	public function file(string $file): self;
+	public function file (string $file): self;
 
 	/**
 	 *   ---------------------------------------------------------------------------
@@ -123,7 +135,7 @@ interface RouteInterface
 	 *
 	 *   ---------------------------------------------------------------------------
 	 */
-	public static function view(array|string $route, string $view): self;
+	public static function view (array|string $route, string $view): self;
 
 	/**
 	 *   --------------------------------------------------------------
@@ -138,10 +150,10 @@ interface RouteInterface
 	 *
 	 * ---------------------------------------------------------------
 	 */
-	public static function redirect(
-		string $route,
-		string $new_url,
-		int $code = 302
+	public static function redirect (
+	 string $route,
+	 string $new_url,
+	 int $code = 302,
 	): void;
 
 	/**
@@ -153,7 +165,7 @@ interface RouteInterface
 	 *
 	 *   --------------------------------------------------------------
 	 */
-	public static function get(array|string $route, $callback): self;
+	public static function get (array|string $route, $callback): self;
 
 	/**
 	 *   --------------------------------------------------------------
@@ -164,7 +176,7 @@ interface RouteInterface
 	 *
 	 *   --------------------------------------------------------------
 	 */
-	public static function post(array|string $route, $callback): self;
+	public static function post (array|string $route, $callback): self;
 
 	/**
 	 *   --------------------------------------------------------------
@@ -175,7 +187,7 @@ interface RouteInterface
 	 *
 	 *   --------------------------------------------------------------
 	 */
-	public static function put(array|string $route, $callback): self;
+	public static function put (array|string $route, $callback): self;
 
 	/**
 	 *   --------------------------------------------------------------
@@ -186,7 +198,7 @@ interface RouteInterface
 	 *
 	 *   --------------------------------------------------------------
 	 */
-	public static function patch(array|string $route, $callback): self;
+	public static function patch (array|string $route, $callback): self;
 
 	/**
 	 *   --------------------------------------------------------------
@@ -197,7 +209,7 @@ interface RouteInterface
 	 *
 	 *   --------------------------------------------------------------
 	 */
-	public static function delete(array|string $route, $callback): self;
+	public static function delete (array|string $route, $callback): self;
 
-	public function __destruct();
+	public function __destruct ();
 }
