@@ -29,8 +29,8 @@ class Resources extends Controller
 	/**
 	 * Get's all full request URL
 	 *
-	 * @static $root_dir
-	 * @var string $root_dir
+	 * @static $request_uri
+	 * @var string $request_uri
 	 * @return string
 	 */
 	protected static string $request_uri;

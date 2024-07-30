@@ -15,7 +15,7 @@ class ViewLoader
 			// get and make generated file name & directory
 			$gen_file = explode('/', $viewFile);
 			$new_name = explode('.', end($gen_file), 2);
-			$new_name = $new_name[0] . '.g.' . $new_name[1];
+			$new_name = $new_name[0] . '.generated.' . $new_name[1];
 
 			$gen_file[count($gen_file) - 1] = $new_name;
 			$gen_file = implode('/', $gen_file);
@@ -61,43 +61,33 @@ class ViewLoader
 		return $this->result;
 	}
 
-	protected function format ($contents): string
+	protected function format ($contents)
 	{
 		$pattern = '/<include\s+path=["|\']([^"]+)["|\']\s*!?\s*\/>/';
 
 		// replace <include> match elements
-		$formattedContents = preg_replace_callback($pattern, function ($matches)
-		{
-			$this->replaceWithInclude($matches);
-		}, $contents);
+		$formattedContents = preg_replace_callback(
+		 $pattern,
+		 function ($matches)
+		 {
+			 $path = trim($matches[1]);
+			 return '<' . '?' . ' slides_include(__DIR__ . \'/' . $path . '\') ?' . '>';
+		 },
+		 $contents
+		);
 
-		$pattern = '/<\\' . '? ([^?]*)\?' . '>/s';
-
-		$formattedContents = preg_replace_callback($pattern, function ($matches)
-		{
-			$this->replaceWithRealTag($matches);
-		}, $formattedContents);
+		// replace <? elements
+		$formattedContents = preg_replace_callback(
+		 '/<' . '\?' . ' ([^?]*)\?' . '>/s',
+		 function ($matches)
+		 {
+			 $val = trim($matches[1]);
+			 $val = trim($val, ';');
+			 return '<' . '?php print_r(' . $val . ') ?>';
+		 },
+		 $formattedContents
+		);
 
 		return $formattedContents;
-	}
-
-	protected function replaceWithInclude ($matches): string
-	{
-		$openTag = '<' . '?';
-		$closeTag = '?' . '>';
-
-		$path = trim($matches[1]);
-		$formatted = "$openTag slides_include(__DIR__ . '/$path') $closeTag";
-		return $formatted;
-	}
-
-	protected function replaceWithRealTag ($matches): string
-	{
-		$openTag = '<' . '?';
-		$closeTag = '?' . '>';
-
-		$val = trim($matches[1]);
-		$val = trim($val, ';');
-		return $openTag . 'php print_r($val) ' . $closeTag;
 	}
 }

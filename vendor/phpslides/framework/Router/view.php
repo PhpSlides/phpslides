@@ -3,10 +3,10 @@
 namespace PhpSlides;
 
 use Exception;
-use PhpSlides\Foundation\Application;
-use PhpSlides\Controller\Controller;
-use PhpSlides\Traits\FileHandler;
 use PhpSlides\Logger\Logger;
+use PhpSlides\Traits\FileHandler;
+use PhpSlides\Controller\Controller;
+use PhpSlides\Foundation\Application;
 
 /**
  *   --------------------------------------------------------------
@@ -32,24 +32,29 @@ final class view extends Controller
 	 *
 	 *   --------------------------------------------------------------
 	 */
-	final public static function render(string $view): mixed
+	final public static function render (string $view): mixed
 	{
 		// split :: into array and extract the folder and files
 		$file = preg_replace('/(::)|::/', '/', $view);
 		$file = strtolower(trim($file, '\/\/'));
 		$file_uri = Application::$viewsDir . $file;
 
-		if (is_file($file_uri . '.view.php') && !preg_match('/(..\/)/', $view)) {
+		if (is_file($file_uri . '.view.php') && !preg_match('/(..\/)/', $view))
+		{
 			$file_type = self::file_type($file_uri . '.view.php');
 			header("Content-Type: $file_type");
 
 			return self::slides_include($file_uri . '.view.php');
-		} elseif (is_file($file_uri) && !preg_match('/(..\/)/', $view)) {
+		}
+		elseif (is_file($file_uri) && !preg_match('/(..\/)/', $view))
+		{
 			$file_type = self::file_type($file_uri);
 			header("Content-Type: $file_type");
 
 			return self::slides_include($file_uri);
-		} else {
+		}
+		else
+		{
 			self::log();
 			throw new Exception("No view file path found called `$file_uri`");
 		}
