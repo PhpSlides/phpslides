@@ -8,9 +8,10 @@ class ViewLoader
 {
 	private array $result = [];
 
-	public function load($viewFile): self
+	public function load ($viewFile): self
 	{
-		if (is_file($viewFile)) {
+		if (is_file($viewFile))
+		{
 			// get and make generated file name & directory
 			$gen_file = explode('/', $viewFile);
 			$new_name = explode('.', end($gen_file), 2);
@@ -22,7 +23,8 @@ class ViewLoader
 			$file_contents = file_get_contents($viewFile);
 			$file_contents = $this->format($file_contents);
 
-			try {
+			try
+			{
 				$file = fopen($gen_file, 'w');
 				fwrite($file, $file_contents);
 				fclose($file);
@@ -31,12 +33,18 @@ class ViewLoader
 				$this->result[] = $parsedLoad->getLoad();
 
 				return $this;
-			} catch (Exception $e) {
+			}
+			catch ( Exception $e )
+			{
 				throw new Exception($e->getMessage(), 1);
-			} finally {
+			}
+			finally
+			{
 				unlink($gen_file);
 			}
-		} else {
+		}
+		else
+		{
 			throw new Exception("File not found: $viewFile");
 		}
 	}
@@ -44,39 +52,52 @@ class ViewLoader
 	/**
 	 * Get Loaded View File Result
 	 */
-	public function getLoad()
+	public function getLoad ()
 	{
-		if (count($this->result) === 1) {
+		if (count($this->result) === 1)
+		{
 			return $this->result[0];
 		}
 		return $this->result;
 	}
 
-	protected function format($contents)
+	protected function format ($contents): string
 	{
 		$pattern = '/<include\s+path=["|\']([^"]+)["|\']\s*!?\s*\/>/';
 
 		// replace <include> match elements
-		$formattedContents = preg_replace_callback(
-			$pattern,
-			function ($matches) {
-				$path = trim($matches[1]);
-				return "<? slides_include(__DIR__ . '/$path') ?>";
-			},
-			$contents
-		);
+		$formattedContents = preg_replace_callback($pattern, function ($matches)
+		{
+			$this->replaceWithInclude($matches);
+		}, $contents);
 
-		// replace <? elements
-		$formattedContents = preg_replace_callback(
-			'/<\? ([^?]*)\?>/s',
-			function ($matches) {
-				$val = trim($matches[1]);
-				$val = trim($val, ';');
-				return "<?php print_r($val) ?>";
-			},
-			$formattedContents
-		);
+		$pattern = '/<\\' . '? ([^?]*)\?' . '>/s';
+
+		$formattedContents = preg_replace_callback($pattern, function ($matches)
+		{
+			$this->replaceWithRealTag($matches);
+		}, $formattedContents);
 
 		return $formattedContents;
+	}
+
+	protected function replaceWithInclude ($matches): string
+	{
+		$openTag = '<' . '?';
+		$closeTag = '?' . '>';
+
+		$path = trim($matches[1]);
+		$formatted = "$openTag slides_include(__DIR__ . '/$path') $closeTag";
+		return $formatted;
+	}
+
+	protected function replaceWithRealTag ($matches): string
+	{
+		$openTag = '<' . '?';
+		$closeTag = '?' . '>';
+
+		$val = trim($matches[1]);
+		$val = trim($val, ';');
+		return $openTag . 'php print_r($val) ' . $closeTag;
 	}
 }

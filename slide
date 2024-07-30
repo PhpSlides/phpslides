@@ -10,6 +10,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // Handle all console commands...
 (new Console($argv))
-   ->listen(host: 'localhost', port: 2200)
+   ->listen(host: 'localhost', port: 2201)
    ->resolve(__DIR__)
    ->debug(true);

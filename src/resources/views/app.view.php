@@ -14,35 +14,35 @@
 
 <head>
    <title>Dashboard | PhpSlides</title>
-   <include path="../components/Header.php" />
+   <include path="components/Header.php" />
 
    <style>
-      .logo {
-         width: 45%;
-         animation: ReSeize 1.3s ease-in-out infinite;
-      }
+   .logo {
+      width: 45%;
+      animation: ReSeize 1.3s ease-in-out infinite;
+   }
 
-      .logo img {
-         width: 100%;
-      }
+   .logo img {
+      width: 100%;
+   }
 
-      .description,
-      .link {
-         margin: auto;
-         color: wheat;
-         font-size: 15px;
-         text-align: center;
-         font-weight: 400;
-         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-      }
+   .description,
+   .link {
+      margin: auto;
+      color: wheat;
+      font-size: 15px;
+      text-align: center;
+      font-weight: 400;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+   }
 
-      .link {
-         text-decoration: underline;
-      }
+   .link {
+      text-decoration: underline;
+   }
 
-      .link:hover {
-         color: whitesmoke;
-      }
+   .link:hover {
+      color: whitesmoke;
+   }
    </style>
 </head>
 
