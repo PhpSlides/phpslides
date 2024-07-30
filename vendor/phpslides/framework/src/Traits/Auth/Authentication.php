@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace PhpSlides\Auth;
+namespace PhpSlides\Traits\Auth;
 
-class Authentication
+trait Authentication
 {
 	private static $authorizationHeader;
 

@@ -3,6 +3,7 @@
 namespace PhpSlides;
 
 use PhpSlides\Controller\Controller;
+use PhpSlides\Foundation\Application;
 use PhpSlides\Interface\MapInterface;
 
 /**
@@ -32,12 +33,12 @@ class MapRoute extends Controller implements MapInterface
 		 *   |   $_REQUEST['uri'] will be empty if req uri is /
 		 *   ----------------------------------------------
 		 */
-		if (!empty($_SERVER['REQUEST_URI'])) {
+		if (!empty(Application::$request_uri)) {
 			self::$request_uri = strtolower(
 				preg_replace(
 					"/(^\/)|(\/$)/",
 					'',
-					urldecode($_SERVER['REQUEST_URI'])
+					urldecode(Application::$request_uri)
 				)
 			);
 		} else {
@@ -94,7 +95,7 @@ class MapRoute extends Controller implements MapInterface
 		 *   |   Exploding request uri string to array to get the exact index number value of parameter from $_REQUEST['uri']
 		 *   ----------------------------------------------------------------------------------
 		 */
-		$reqUri = explode('/', self::$request_uri);
+		$reqUri = explode('/', Application::$request_uri);
 
 		/**
 		 *   ----------------------------------------------------------------------------------

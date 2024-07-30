@@ -1,9 +1,10 @@
 <?php
 
 use PhpSlides\Controller\RouteController;
+use PhpSlides\Foundation\Application;
 use PhpSlides\Loader\ViewLoader;
 
-define('__ROOT__', dirname(__DIR__));
+define('__ROOT__', Application::$basePath);
 
 const GET = 'GET';
 const PUT = 'PUT';
@@ -128,38 +129,44 @@ function route(
  * Getting public files
  *
  * @param string $filename The name of the file to get from public directory
- * @param string $path_type Path to start location which uses either `RELATIVE_PATH` for path `../` OR `ROOT_RELATIVE_PATH` for root `/`
+ * @param string $path_type Path to start location which uses either `RELATIVE_PATH`
+ * for path `../` OR `ROOT_RELATIVE_PATH` for root `/`
  */
 function asset(string $filename, $path_type = RELATIVE_PATH): string
 {
 	$filename = preg_replace('/(::)|::/', '/', $filename);
 	$filename = strtolower(trim($filename, '\/\/'));
 
-	$path = './';
-	if (!empty(urldecode($_SERVER['REQUEST_URI']))) {
-		$reqUri = explode('/', trim(urldecode($_SERVER['REQUEST_URI']), '/'));
+	if (php_sapi_name() == 'cli-server') {
+		$root_path = '/';
+	} else {
+		$find = '/src/bootstrap/app.php';
+		$self = $_SERVER['PHP_SELF'];
 
-		for ($i = 0; $i < count($reqUri); $i++) {
+		$root_path = substr_replace(
+			$self,
+			'/',
+			strrpos($self, $find),
+			strlen($find)
+		);
+	}
+
+	$path = './';
+	if (!empty(Application::$request_uri)) {
+		$root_pathExp = explode('/', trim($root_path, '/'));
+		$reqUri = explode('/', trim(Application::$request_uri, '/'));
+
+		for ($i = 0; $i < count($reqUri) - count($root_pathExp); $i++) {
 			$path .= '../';
 		}
 	}
-
-	$find = '/src/bootstrap/app.php';
-	$self = $_SERVER['PHP_SELF'];
-	//exit('hh');
-	$root_path = substr_replace(
-		$self,
-		'/',
-		strrpos($self, $find),
-		strlen($find)
-	);
 
 	switch ($path_type) {
 		case RELATIVE_PATH:
 			return $path . $filename;
 		case ROOT_RELATIVE_PATH:
-			return $root_path . $filename;
+			return $root . $filename;
 		default:
-			return '';
+			return $filename;
 	}
 }

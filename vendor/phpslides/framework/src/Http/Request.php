@@ -3,7 +3,8 @@
 namespace PhpSlides\Http;
 
 use stdClass;
-use PhpSlides\Auth\Authentication;
+use PhpSlides\Foundation\Application;
+use PhpSlides\Traits\Auth\Authentication;
 use PhpSlides\Http\Interface\RequestInterface;
 
 /**
@@ -11,8 +12,10 @@ use PhpSlides\Http\Interface\RequestInterface;
  *
  * Handles HTTP request data including URL parameters, query strings, headers, authentication, body data, and more.
  */
-class Request implements RequestInterface
+class Request extends Application implements RequestInterface
 {
+	use Authentication;
+
 	/**
 	 * @var ?array The URL parameters.
 	 */
@@ -46,7 +49,7 @@ class Request implements RequestInterface
 	public function urlQuery(): stdClass
 	{
 		$cl = new stdClass();
-		$parsed = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+		$parsed = parse_url(self::$request_uri, PHP_URL_QUERY);
 
 		if (!$parsed) {
 			return $cl;
@@ -86,8 +89,8 @@ class Request implements RequestInterface
 	public function Auth(): stdClass
 	{
 		$cl = new stdClass();
-		$cl->basic = Authentication::BasicAuthCredentials();
-		$cl->bearer = Authentication::BearerToken();
+		$cl->basic = self::BasicAuthCredentials();
+		$cl->bearer = self::BearerToken();
 
 		return $cl;
 	}
@@ -210,7 +213,7 @@ class Request implements RequestInterface
 	 */
 	public function uri(): string
 	{
-		return urldecode($_SERVER['REQUEST_URI']);
+		return self::$request_uri;
 	}
 
 	/**

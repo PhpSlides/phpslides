@@ -20,7 +20,7 @@ trait Logger
 		$method = $_SERVER['REQUEST_METHOD'];
 
 		// get request url
-		$uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+		$uri = Application::$request_uri;
 
 		// get status response code for each request
 		$http_code = http_response_code();
@@ -32,7 +32,7 @@ trait Logger
 		$remote_addr = $_SERVER['REMOTE_ADDR'];
 
 		// all content messages to log
-		$content = "[$date] $remote_addr $method $uri $http_protocol $http_code\n";
+		$content = "$remote_addr - - [$date] \"$method $uri $http_protocol\" $http_code\n";
 
 		if (Route::$log === true) {
 			$log = fopen($log_path, 'a');

@@ -90,15 +90,15 @@ final class Route extends Resources implements RouteInterface
 	/**
 	 *   ---------------------------------------------------------------------------------------------------------
 	 *
-	 *   |   If `$request_log` is set to true, it prints logs in `.log` file in the root of the project each time any request has been received.
-	 *   |   It's been setted to true by default
+	 *   If `$request_log` is set to true, it prints logs in `.log` file in the root of the project each time any request has been received.
+	 *   It's been setted to true by default
 	 *
 	 *
-	 *   |   This function handles getting files request and describe the type of request to handle according to `phpslides.config.json` file in the root of the project,
-	 *   |   for more security, it disallow users in navigating to wrong paths or files of the project.
+	 *   This function handles getting files request and describe the type of request to handle according to `phpslides.config.json` file in the root of the project,
+	 *   for more security, it disallow users in navigating to wrong paths or files of the project.
 	 *
 	 *
-	 *   |   This config method must be called before writing any other Route method or codes.
+	 *   This config method must be called before writing any other Route method or codes.
 	 *   |
 	 *
 	 *   @param bool $request_log The parameter indicates request logger to prints out logs output on each received request
@@ -110,7 +110,10 @@ final class Route extends Resources implements RouteInterface
 		try {
 			self::$log = $request_log;
 			self::$root_dir = Application::$basePath;
-			self::$request_uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+			self::$request_uri = parse_url(
+				Application::$request_uri,
+				PHP_URL_PATH
+			);
 
 			$dir = self::$root_dir;
 			$req = preg_replace("/(^\/)|(\/$)/", '', self::$request_uri);
@@ -130,7 +133,7 @@ final class Route extends Resources implements RouteInterface
 
 			/**
 			 *   ----------------------------------------------
-			 *   |   Config File & Request Router configurations
+			 *   Config File & Request Router configurations
 			 *   ----------------------------------------------
 			 */
 			if (!empty($config_file) && $file_type != null) {
@@ -141,7 +144,7 @@ final class Route extends Resources implements RouteInterface
 				foreach ($url as $index => $value) {
 					/**
 					 *   -----------------------------------------------
-					 *   |   Checks if array key from URL exists in the config file
+					 *   Checks if array key from URL exists in the config file
 					 *   -----------------------------------------------
 					 */
 					if (array_key_exists($value, $config)) {
@@ -150,14 +153,14 @@ final class Route extends Resources implements RouteInterface
 
 							/**
 							 *   -----------------------------------------------
-							 *   |   Checks if the next array key from URL exists in the config file
+							 *   Checks if the next array key from URL exists in the config file
 							 *   -----------------------------------------------
 							 */
 							if (array_key_exists($url[$index + 1], $config)) {
 								continue;
 							} /**
 							 *   -----------------------------------------------
-							 *   |   Performs the logic for accepting current file
+							 *   Performs the logic for accepting current file
 							 *   -----------------------------------------------
 							 */ else {
 								http_response_code(200);
@@ -170,8 +173,8 @@ final class Route extends Resources implements RouteInterface
 							}
 						} /**
 						 *   -----------------------------------------------------------
-						 *   |   Checks if * or image exists in the config file of the $value
-						 *   |   Then it accept all types of files or all types of image in the childrens folder
+						 *   Checks if * or image exists in the config file of the $value
+						 *   Then it accept all types of files or all types of image in the childrens folder
 						 *   -----------------------------------------------------------
 						 */ elseif (
 							in_array('*', $config[$value]) ||
@@ -189,7 +192,7 @@ final class Route extends Resources implements RouteInterface
 								continue;
 							} /**
 							 *  -----------------------------------------------
-							 *  |     Performs the logic for accepting current file
+							 *    Performs the logic for accepting current file
 							 *  -----------------------------------------------
 							 */ else {
 								http_response_code(200);
@@ -208,7 +211,7 @@ final class Route extends Resources implements RouteInterface
 
 				/**
 				 *   ------------------------------------------------------------------------
-				 *   |   If request URL is a file from / and is in the root directory of public folder
+				 *   If request URL is a file from / and is in the root directory of public folder
 				 *   ------------------------------------------------------------------------
 				 */
 				if (
@@ -222,7 +225,7 @@ final class Route extends Resources implements RouteInterface
 
 					/**
 					 *   ---------------------------------------------------------------------------------------------
-					 *   |   checks if the requested file extension is available in the config files or * which signifies all types of extension
+					 *   checks if the requested file extension is available in the config files or * which signifies all types of extension
 					 *   ---------------------------------------------------------------------------------------------
 					 */
 					for ($i = 0; $i < count($root); $i++) {
@@ -259,11 +262,11 @@ final class Route extends Resources implements RouteInterface
 	/**
 	 *   ------------------------------------------------------------------------
 	 *
-	 *   |   ANY REQUEST FROM ROUTE
+	 *   ANY REQUEST FROM ROUTE
 	 *
-	 *   |   Accept all type of request or any other method
+	 *   Accept all type of request or any other method
 	 *
-	 *   |   Cannot evaluate `{?} URL parameters` in route if it's an array
+	 *   Cannot evaluate `{?} URL parameters` in route if it's an array
 	 *   |
 	 *
 	 *   @param array|string $route This describes the URL string to check if it matches the request URL, use array of URLs for multiple request
@@ -279,10 +282,10 @@ final class Route extends Resources implements RouteInterface
 		/**
 		 *   --------------------------------------------------------------
 		 *
-		 *   |   Not Found Error
+		 *   Not Found Error
 		 *
-		 *   |   This * route serves as 404, which executes whenever there're no matching routes from the request url
-		 *   |   which takes a callback parameter that is rendered to the webpage
+		 *   This * route serves as 404, which executes whenever there're no matching routes from the request url
+		 *   which takes a callback parameter that is rendered to the webpage
 		 *
 		 * --------------------------------------------------------------
 		 */
@@ -312,9 +315,9 @@ final class Route extends Resources implements RouteInterface
 		if (empty($paramMatches[0]) || is_array($route)) {
 			/**
 			 *   ------------------------------------------------------
-			 *   |   Check if $callback is a callable function
-			 *   |   or array of controller, and if not,
-			 *   |   it's a string of text or html document
+			 *   Check if $callback is a callable function
+			 *   or array of controller, and if not,
+			 *   it's a string of text or html document
 			 *   ------------------------------------------------------
 			 */
 			$callback = self::routing($route, $callback, $method);
@@ -349,8 +352,8 @@ final class Route extends Resources implements RouteInterface
 
 		/**
 		 *   ----------------------------------------------
-		 *   |   Replacing first and last forward slashes
-		 *   |   $_SERVER['REQUEST_URI'] will be empty if req uri is /
+		 *   Replacing first and last forward slashes
+		 *   $_SERVER['REQUEST_URI'] will be empty if req uri is /
 		 *   ----------------------------------------------
 		 */
 
@@ -378,20 +381,20 @@ final class Route extends Resources implements RouteInterface
 
 		/**
 		 *   ----------------------------------------------------------------------------------
-		 *   |   Exploding request uri string to array to get the exact index number value of parameter from $_SERVER['REQUEST_URI']
+		 *   Exploding request uri string to array to get the exact index number value of parameter from $_SERVER['REQUEST_URI']
 		 *   ----------------------------------------------------------------------------------
 		 */
 		$reqUri = explode('/', $reqUri);
 
 		/**
 		 *   ----------------------------------------------------------------------------------
-		 *   |   Running for each loop to set the exact index number with reg expression this will help in matching route
+		 *   Running for each loop to set the exact index number with reg expression this will help in matching route
 		 *   ----------------------------------------------------------------------------------
 		 */
 		foreach ($indexNum as $key => $index) {
 			/**
 			 *   --------------------------------------------------------------------------------
-			 *   |   In case if req uri with param index is empty then return because URL is not valid for this route
+			 *   In case if req uri with param index is empty then return because URL is not valid for this route
 			 *   --------------------------------------------------------------------------------
 			 */
 
@@ -412,8 +415,8 @@ final class Route extends Resources implements RouteInterface
 
 		/**
 		 *   -----------------------------------
-		 *   |   replace all / with \/ for reg expression
-		 *   |   regex to match route is ready!
+		 *   replace all / with \/ for reg expression
+		 *   regex to match route is ready!
 		 *   -----------------------------------
 		 */
 		$reqUri = str_replace('/', '\\/', $reqUri);

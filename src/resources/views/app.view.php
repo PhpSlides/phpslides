@@ -60,7 +60,7 @@
             PhpSlides let you create a secured Routing in php and secured API, which prevents SQL injections, and from XSS attack & CSRF.
          </p>
          <p>
-            <a href="//packagist.org/packages/dconco/php_slides" class="link">
+            <a href="//packagist.org/packages/phpslides/phpslides" class="link">
                <!-- Call out variables or any php code to render in the client-side with <? '' ?> tag -->
                <!-- This function is available for version above 1.2.0 -->
                <? $text ?>
@@ -68,7 +68,7 @@
          </p>
       </div>
 
-      <a href="./any"><button class="btn">Navigate To Not Found Page</button></a>
+      <a href="<? asset('any') ?>"><button class="btn">Navigate To Not Found Page</button></a>
    </div>
 </body>
 

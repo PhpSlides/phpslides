@@ -70,7 +70,7 @@ class RouteController
 		$uri = [];
 		$str_route = '';
 		$reqUri = strtolower(
-			preg_replace("/(^\/)|(\/$)/", '', urldecode($_SERVER['REQUEST_URI']))
+			preg_replace("/(^\/)|(\/$)/", '', Application::$request_uri)
 		);
 
 		if (is_array($route)) {

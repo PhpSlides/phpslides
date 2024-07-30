@@ -60,6 +60,12 @@ class Application implements ApplicationInterface
 	public static string $scriptsDir;
 
 	/**
+	 * @var string $request_uri
+	 * The request Uri
+	 */
+	public static string $request_uri;
+
+	/**
 	 * Configure the application with the base path.
 	 *
 	 * @param string $basePath The base path of the application.
@@ -68,6 +74,16 @@ class Application implements ApplicationInterface
 	public static function configure(string $basePath): self
 	{
 		self::$basePath = rtrim($basePath, '/') . '/';
+
+		if (php_sapi_name() == 'cli-server') {
+			self::$request_uri = urldecode($_SERVER['REQUEST_URI']);
+		} else {
+			self::$request_uri = urldecode(
+				$_REQUEST['uri'] ?? $_SERVER['REQUEST_URI']
+			);
+		}
+		exit(self::$request_uri);
+
 		return new self();
 	}
 
@@ -104,7 +120,7 @@ class Application implements ApplicationInterface
 
 		Route::config((bool) (getenv('APP_DEBUG') ?? true));
 		$loader
-			->load(__DIR__ . '/../Functions/Functions.php')
+			->load(__DIR__ . '/../Globals/Functions.php')
 			->load(self::$apiPath)
 			->load(self::$webPath);
 	}
