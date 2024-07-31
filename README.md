@@ -16,26 +16,27 @@ streamlining the development process and enhancing productivity.
 
 ## Table of Contents
 
-- [PhpSlides](#phpslides)
-  - [Table of Contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [Features](#features)
-  - [Requirements](#requirements)
-  - [Installation](#installation)
-    - [Install with Composer](#install-with-composer)
-    - [Or Clone the Repository](#or-clone-the-repository)
-  - [Configuration](#configuration)
-    - [.env](#env)
-    - [phpslides.config.json](#phpslidesconfigjson)
-  - [Syntax](#syntax)
-    - [Creating Web Layouts](#creating-web-layouts)
-    - [Styling Web Layouts](#styling-web-layouts)
-    - [Creating Web Routes](#creating-web-routes)
-    - [Creating API Routes](#creating-api-routes)
-  - [Directory Structure](#directory-structure)
-  - [Documentation](#documentation)
-  - [Contributing](#contributing)
-  - [License](#license)
+-  [PhpSlides](#phpslides)
+   -  [Table of Contents](#table-of-contents)
+   -  [Introduction](#introduction)
+   -  [Features](#features)
+   -  [Requirements](#requirements)
+   -  [Installation](#installation)
+      -  [Install with Composer](#install-with-composer)
+      -  [Or Clone the Repository](#or-clone-the-repository)
+   -  [Configuration](#configuration)
+      -  [.env](#env)
+      -  [phpslides.config.json](#phpslidesconfigjson)
+   -  [Syntax](#syntax)
+      -  [Creating Web Layouts](#creating-web-layouts)
+      -  [Styling Web Layouts](#styling-web-layouts)
+      -  [Creating Web Routes](#creating-web-routes)
+      -  [Creating API Routes](#creating-api-routes)
+   -  [Directory Structure](#directory-structure)
+   -  [Documentation](#documentation)
+   -  [Contributing](#contributing)
+   -  [License](#license)
+   -  [Financial Support](#financial-support)
 
 ## Introduction
 
@@ -46,19 +47,19 @@ Additionally, it provides the capability to write HTML, CSS, and JavaScript in a
 
 ## Features
 
-- **Full-Stack Development**: Seamlessly integrate front-end and back-end development by writing HTML, CSS, and JavaScript in a PHP-like syntax.
-- **Simple Routing**: Easily define routes and map them to controllers and actions.
-- **Modular Structure**: Organized directory structure for models, views, controllers, and other components.
-- **Database Abstraction**: Simple and flexible database handling with a query builder.
-- **Middleware Support**: Add middleware to handle authentication, logging, and other tasks.
-- **Event Handling**: Built-in event handling system for managing application events.
-- **Service Providers**: Easily manage and configure services like email, payment, caching, etc.
+-  **Full-Stack Development**: Seamlessly integrate front-end and back-end development by writing HTML, CSS, and JavaScript in a PHP-like syntax.
+-  **Simple Routing**: Easily define routes and map them to controllers and actions.
+-  **Modular Structure**: Organized directory structure for models, views, controllers, and other components.
+-  **Database Abstraction**: Simple and flexible database handling with a query builder.
+-  **Middleware Support**: Add middleware to handle authentication, logging, and other tasks.
+-  **Event Handling**: Built-in event handling system for managing application events.
+-  **Service Providers**: Easily manage and configure services like email, payment, caching, etc.
 
 ## Requirements
 
-- PHP 8.2 or higher
-- Composer
-- A web server (e.g., Apache, Nginx)
+-  PHP 8.2 or higher
+-  Composer
+-  A web server (e.g., Apache, Nginx)
 
 ## Installation
 
@@ -113,25 +114,20 @@ APP_DEBUG=true
 
 ```json
 {
-   "public": {
-      "/": ["*"],
-      "assets": ["*"],
-      "images": ["image"],
-      "videos": ["video"],
-      "audios": ["audio"],
-      "styles": ["css", "scss", "sass" ],
-      "css": ["css", "scss", "sass" ],
-      "src": [
-         "js",
-         "ts",
-         "css",
-         "scss",
-         "sass"],
-      "png": ["png"],
-      "jpg": ["jpg"],
-      "svg": ["svg"]
-   },
-   "charset": "UTF-8"
+	"public": {
+		"/": ["*"],
+		"assets": ["*"],
+		"images": ["image"],
+		"videos": ["video"],
+		"audios": ["audio"],
+		"styles": ["css", "scss", "sass"],
+		"css": ["css", "scss", "sass"],
+		"src": ["js", "ts", "css", "scss", "sass"],
+		"png": ["png"],
+		"jpg": ["jpg"],
+		"svg": ["svg"]
+	},
+	"charset": "UTF-8"
 }
 ```
 
@@ -212,25 +208,25 @@ Here's an overview of the project directory structure:
 
 project_root/<br>
 ├── app/<br>
-│ ├── controllers/<br>
-│ ├── middlewares/<br>
-│ ├── models/<br>
+│ ├── Controllers/<br>
+│ ├── Middlewares/<br>
+│ ├── Models/<br>
 ├── public/<br>
 ├── src/<br>
 │ ├── bootstrap/<br>
 │ ├── configs/<br>
 │ ├── resources/<br>
 │ │ └── views/<br>
-│ │   └── errors/<br>
+│ │ └── errors/<br>
 ├── vendor/<br>
 ├── .env<br>
 ├── .env.example<br>
 ├── .htaccess<br>
 ├── composer.json<br>
-├── slides<br>
 ├── LICENSE<br>
 ├── phpslides.config.json<br>
 └── README.md
+├── slide<br>
 
 ## Documentation
 
@@ -254,3 +250,11 @@ please follow these steps:
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](https://github.com/PhpSlides/phpslides/blob/master/LICENSE) file for more details.
+
+## Financial Support
+
+Your contributions help us maintain and improve PhpSlides.
+If you find PhpSlides useful, please consider supporting us financially.
+Every bit of support goes a long way in ensuring we can continue to develop and enhance the framework.
+
+[Support Now!](https://buymeacoffee.com/dconco)
