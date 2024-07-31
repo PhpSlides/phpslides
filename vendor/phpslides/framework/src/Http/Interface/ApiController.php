@@ -2,6 +2,8 @@
 
 namespace PhpSlides\Http\Interface;
 
+use PhpSlides\Http\Request;
+
 /**
  * Interface ApiController
  *
