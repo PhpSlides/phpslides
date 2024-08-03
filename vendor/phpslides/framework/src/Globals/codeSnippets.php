@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * 
+ * @param string $file
+ * @param string $line
+ * @param int $linesBefore
+ * @param int $linesAfter
+ * @return array<string, array<string>>
+ */
 function getCodeSnippet (string $file, string $line, int $linesBefore = 5, int $linesAfter = 5): array
 {
    $startLine = max(1, $line - $linesBefore);

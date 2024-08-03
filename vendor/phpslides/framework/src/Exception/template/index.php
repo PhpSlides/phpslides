@@ -1,3 +1,8 @@
+<?php
+$code_json = json_encode($codeSnippet['parsedCode']);
+$highlight_json = json_encode([ $line ]);
+?>
+
 <!doctype html>
 <html>
 
@@ -110,22 +115,7 @@ header span {
 
       <div class="code-wrapper">
          <span><b>File: </b>../components/style/App.style</span>
-
-         <pre><code class="language-php"><?php
-			foreach ($codeSnippet ?? [] as $lineNumber => $lineContent)
-			{
-				$lineContent = htmlspecialchars($lineContent);
-
-				if ($lineNumber + 1 == $line)
-				{
-					echo "<span style='background-color: #ffdddd; color: #a00;'>" . ($lineNumber + 1) . ": " . $lineContent . "</span>";
-				}
-				else
-				{
-					echo ($lineNumber + 1) . ": " . $lineContent;
-				}
-			}
-			?></code></pre>
+         <pre><code class="language-php" id="code-block"></code></pre>
       </div>
    </div>
 
@@ -144,34 +134,31 @@ header span {
 
    <script>
    document.addEventListener('DOMContentLoaded', event => {
-      hljs.highlightAll();
-      // document.querySelectorAll('pre code').forEach(block => {
-      //    hljs.highlightBlock(block)
-      //    addLineNumbers(block)
-      //    highlightSpecificLines(block, [4])
-      // })
+      const codeLines = JSON.parse('<?php echo $code_json; ?>');
+      const linesToHighlight = '';
    })
 
-   function addLineNumbers(block) {
-      const lines = block.innerHTML.split('\n')
-      block.innerHTML = lines
-         .map((line, index) => {
-            return ``
-         })
-         .join('\n')
-   }
+   // function addLineNumbers(block) {
+   //    const lines = block.innerHTML.split('\n')
+   //    block.innerHTML = lines
+   //       .map((line, index) => {
+   //          return `<span class="hljs-line-numbers">${index + 1
+   // 					}</span>${line}`
+   //       })
+   //       .join('\n')
+   // }
 
-   function highlightSpecificLines(block, linesToHighlight) {
-      const lines = block.innerHTML.split('\n')
-      block.innerHTML = lines
-         .map((line, index) => {
-            if (linesToHighlight.includes(index + 1)) {
-               return ``
-            }
-            return line
-         })
-         .join('\n')
-   }
+   // function highlightSpecificLines(block, linesToHighlight) {
+   //    const lines = block.innerHTML.split('\n')
+   //    block.innerHTML = lines
+   //       .map((line, index) => {
+   //          if (linesToHighlight.includes(index + 1)) {
+   //             return `<span class="highlighted-line">${line}</span>`
+   //          }
+   //          return line
+   //       })
+   //       .join('\n')
+   // }
    </script>
 </body>
 
