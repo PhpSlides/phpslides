@@ -233,17 +233,12 @@ function ExceptionHandler ($exception)
 	error_log($detailedMessage);
 
 	(new FileLoader())->load(__DIR__ . '/../Exception/template/index.php');
+
+	$codes = '';
 	foreach ($codeSnippet ?? [] as $lineNumber => $lineContent)
 	{
 		$lineContent = htmlspecialchars($lineContent);
-		if ($lineNumber + 1 == $line)
-		{
-			echo "<span style='background-color: #ffdddd; color: #a00;'>" . ($lineNumber + 1) . ": " . $lineContent . "</span>";
-		}
-		else
-		{
-			echo ($lineNumber + 1) . ": " . $lineContent;
-		}
+
 	}
 }
 
