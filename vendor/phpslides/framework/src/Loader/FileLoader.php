@@ -2,7 +2,7 @@
 
 namespace PhpSlides\Loader;
 
-use Exception;
+use PhpSlides\Exception;
 
 class FileLoader
 {
@@ -13,17 +13,20 @@ class FileLoader
 	 *
 	 * @return self
 	 */
-	public function load($file): self
+	public function load ($file): self
 	{
 		/**
 		 * Checks if File exists
 		 */
-		if (file_exists($file)) {
+		if (file_exists($file))
+		{
 			$result = include $file;
 			$this->result[] = $result;
 
 			return $this;
-		} else {
+		}
+		else
+		{
 			throw new Exception("File not found: $file");
 		}
 	}
@@ -31,9 +34,10 @@ class FileLoader
 	/**
 	 * Get Loaded File Result
 	 */
-	public function getLoad()
+	public function getLoad ()
 	{
-		if (count($this->result) === 1) {
+		if (count($this->result) === 1)
+		{
 			return $this->result[0];
 		}
 		return $this->result;
@@ -45,12 +49,13 @@ class FileLoader
 	 *
 	 * @return self Parsed File content as `string` and if no content, returns empty `string`
 	 */
-	public function parseLoad(string $file): self
+	public function parseLoad (string $file): self
 	{
 		/**
 		 * Checks if File exists
 		 */
-		if (file_exists($file)) {
+		if (file_exists($file))
+		{
 			/**
 			 * Store the file content and clear cache
 			 */
@@ -58,13 +63,18 @@ class FileLoader
 			include $file;
 			$output = ob_get_clean();
 
-			if ($output !== false && strlen($output ?? '') > 0) {
+			if ($output !== false && strlen($output ?? '') > 0)
+			{
 				$this->result[] = $output;
-			} else {
+			}
+			else
+			{
 				$this->result[] = '';
 			}
 			return $this;
-		} else {
+		}
+		else
+		{
 			throw new Exception("File not found: $file");
 		}
 	}
