@@ -1,6 +1,7 @@
 <?php
 
 use PhpSlides\Exception;
+use PhpSlides\Loader\FileLoader;
 use PhpSlides\Loader\ViewLoader;
 use PhpSlides\Foundation\Application;
 
@@ -206,6 +207,7 @@ function ExceptionHandler ($exception)
 	{
 		$file = $exception->getFilteredFile();
 		$line = $exception->getFilteredLine();
+		$trace = $exception->filterStackTrace();
 		$codeSnippet = $exception->getCodeSnippet();
 		$detailedMessage = $exception->getDetailedMessage();
 	}
@@ -214,6 +216,7 @@ function ExceptionHandler ($exception)
 		// For base Exception, use default methods
 		$file = $exception->getFile();
 		$line = $exception->getLine();
+		$trace = $exception->getTrace();
 		$detailedMessage = sprintf(
 		  "Error: %s in %s on line %d",
 		  $exception->getMessage(),
@@ -222,26 +225,14 @@ function ExceptionHandler ($exception)
 		);
 
 		// Get code snippet manually
-// $codeSnippet = $exceptiongetCodeSnippet($file, $line);
+		(new FileLoader())->load(__DIR__ . '/codeSnippets.php');
+		$codeSnippet = getCodeSnippet($file, $line, 5, 5);
 	}
 
 	// Log the detailed error message
-// error_log($detailedMessage);
+	error_log($detailedMessage);
 
-	// Display custom HTML error message
-	echo "<h1>An error occurred</h1>";
-	echo "<p>We are sorry, but something went wrong. Please try again later.</p>";
-
-	// // Display detailed error information
-	echo "<h2>Error Details</h2>";
-	echo "<p><strong>Message:</strong> " . htmlspecialchars($detailedMessage) . "</p>";
-	echo "<p><strong>File:</strong> " . htmlspecialchars($file) . "</p>";
-	echo "<p><strong>Line:</strong> " . htmlspecialchars($line) . "</p>";
-
-	// // Display code snippet
-	echo "<h2>Code Snippet</h2>";
-	echo "<pre style='background-color: #f8f8f8; padding: 10px; border: 1px solid #ccc;'>";
-
+	(new FileLoader())->load(__DIR__ . '/../Exception/template/index.php');
 	foreach ($codeSnippet ?? [] as $lineNumber => $lineContent)
 	{
 		$lineContent = htmlspecialchars($lineContent);
@@ -254,7 +245,6 @@ function ExceptionHandler ($exception)
 			echo ($lineNumber + 1) . ": " . $lineContent;
 		}
 	}
-	echo "</pre>";
 }
 
 set_exception_handler('ExceptionHandler');

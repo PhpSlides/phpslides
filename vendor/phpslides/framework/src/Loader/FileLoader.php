@@ -45,6 +45,8 @@ class FileLoader
 
 	/**
 	 * Load File Contents and return Parsed Content
+	 * Loaded File will be loaded without executing any code in the file.
+	 * It'll wrap the whole code and return them
 	 * Load Included Contents as String
 	 *
 	 * @return self Parsed File content as `string` and if no content, returns empty `string`

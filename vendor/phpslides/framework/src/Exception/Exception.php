@@ -3,13 +3,16 @@
 
 namespace PhpSlides;
 
+use Throwable;
+use PhpSlides\Loader\FileLoader;
 use Exception as DefaultException;
+use Phpslides\Interface\SlidesException;
 
-class Exception extends DefaultException
+class Exception extends DefaultException implements Throwable, SlidesException
 {
-   public function getDetailedMessage ()
+   public function getDetailedMessage (): string
    {
-      $trace = $this->filterStackTrace($this->getTrace());
+      $trace = $this->filterStackTrace();
 
       if (!empty($trace))
       {
@@ -21,6 +24,7 @@ class Exception extends DefaultException
          $file = $this->getFile();
          $line = $this->getLine();
       }
+
       return sprintf(
           "Error: %s in %s on line %d",
           $this->getMessage(),
@@ -29,12 +33,12 @@ class Exception extends DefaultException
       );
    }
 
-   private function filterStackTrace ($trace)
+   public function filterStackTrace (): array
    {
       /**
        * This Filter and removes all file path that is coming from the vendor folders
        */
-      $majorFilter = array_filter($trace, function ($item)
+      $majorFilter = array_filter($this->getTrace(), function ($item)
       {
          $ss = strpos($item['file'], '/vendor/') === false;
          $sss = strpos($item['file'], '\vendor\\') === false;
@@ -45,7 +49,7 @@ class Exception extends DefaultException
       /**
        * This filters and add only file path from the vendor folders
        */
-      $minorFilter = array_filter($trace, function ($item)
+      $minorFilter = array_filter($this->getTrace(), function ($item)
       {
          $ss = strpos($item['file'], '/vendor/') === false;
          $sss = strpos($item['file'], '\vendor\\') === false;
@@ -65,9 +69,9 @@ class Exception extends DefaultException
       return $newFilter;
    }
 
-   public function getFilteredFile ()
+   public function getFilteredFile (): string
    {
-      $trace = $this->filterStackTrace($this->getTrace());
+      $trace = $this->filterStackTrace();
 
       if (!empty($trace))
       {
@@ -76,9 +80,9 @@ class Exception extends DefaultException
       return $this->getFile();
    }
 
-   public function getFilteredLine ()
+   public function getFilteredLine (): int
    {
-      $trace = $this->filterStackTrace($this->getTrace());
+      $trace = $this->filterStackTrace();
       if (!empty($trace))
       {
          return $trace[0]['line'];
@@ -86,16 +90,17 @@ class Exception extends DefaultException
       return $this->getLine();
    }
 
-   public function getCodeSnippet ($linesBefore = 5, $linesAfter = 5)
+   public function getCodeSnippet ($linesBefore = 5, $linesAfter = 5): array|bool
    {
-      $file = $this->getFilteredFile();
-      $line = $this->getFilteredLine();
-      $startLine = max(1, $line - $linesBefore);
-      $endLine = $line + $linesAfter;
+      $file = $this->getFilteredFile() ?? $this->getFile();
+      $line = $this->getFilteredLine() ?? $this->getLine();
 
-      $code = file($file);
-      $snippet = array_slice($code, $startLine - 1, $endLine - $startLine + 1, true);
-
-      return $snippet;
+      (new FileLoader())->load(__DIR__ . '/../Globals/codeSnippets.php');
+      return getCodeSnippet(
+         file: $file,
+         line: $line,
+         linesBefore: $linesBefore,
+         linesAfter: $linesAfter
+      );
    }
 }
