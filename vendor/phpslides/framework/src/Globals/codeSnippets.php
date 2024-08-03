@@ -1,6 +1,6 @@
 <?php
 
-function getCodeSnippet (string $file, string $line, int $linesBefore = 5, int $linesAfter = 5): array|bool
+function getCodeSnippet (string $file, string $line, int $linesBefore = 5, int $linesAfter = 5): array
 {
    $startLine = max(1, $line - $linesBefore);
    $endLine = $line + $linesAfter;

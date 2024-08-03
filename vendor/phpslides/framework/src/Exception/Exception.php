@@ -1,6 +1,5 @@
 <?php
 
-
 namespace PhpSlides;
 
 use Throwable;
@@ -90,7 +89,7 @@ class Exception extends DefaultException implements Throwable, SlidesException
       return $this->getLine();
    }
 
-   public function getCodeSnippet ($linesBefore = 5, $linesAfter = 5): array|bool
+   public function getCodeSnippet ($linesBefore = 5, $linesAfter = 5): array
    {
       $file = $this->getFilteredFile() ?? $this->getFile();
       $line = $this->getFilteredLine() ?? $this->getLine();

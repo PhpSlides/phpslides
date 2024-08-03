@@ -232,14 +232,7 @@ function ExceptionHandler ($exception)
 	// Log the detailed error message
 	error_log($detailedMessage);
 
-	(new FileLoader())->load(__DIR__ . '/../Exception/template/index.php');
-
-	$codes = '';
-	foreach ($codeSnippet ?? [] as $lineNumber => $lineContent)
-	{
-		$lineContent = htmlspecialchars($lineContent);
-
-	}
+	include_once __DIR__ . '/../Exception/template/index.php';
 }
 
 set_exception_handler('ExceptionHandler');
