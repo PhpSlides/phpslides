@@ -14,35 +14,35 @@
 
 <head>
    <title>Dashboard | PhpSlides</title>
-   <include path="../components/Header.php" />
+   <include path="./components/Header.php" />
 
    <style>
-      .logo {
-         width: 45%;
-         animation: ReSeize 1.3s ease-in-out infinite;
-      }
+   .logo {
+      width: 45%;
+      animation: ReSeize 1.3s ease-in-out infinite;
+   }
 
-      .logo img {
-         width: 100%;
-      }
+   .logo img {
+      width: 100%;
+   }
 
-      .description,
-      .link {
-         margin: auto;
-         color: wheat;
-         font-size: 15px;
-         text-align: center;
-         font-weight: 400;
-         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-      }
+   .description,
+   .link {
+      margin: auto;
+      color: wheat;
+      font-size: 15px;
+      text-align: center;
+      font-weight: 400;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+   }
 
-      .link {
-         text-decoration: underline;
-      }
+   .link {
+      text-decoration: underline;
+   }
 
-      .link:hover {
-         color: whitesmoke;
-      }
+   .link:hover {
+      color: whitesmoke;
+   }
    </style>
 </head>
 
@@ -60,7 +60,7 @@
             PhpSlides let you create a secured Routing in php and secured API, which prevents SQL injections, and from XSS attack & CSRF.
          </p>
          <p>
-            <a href="//packagist.org/packages/dconco/php_slides" class="link">
+            <a href="//packagist.org/packages/phpslides/phpslides" class="link">
                <!-- Call out variables or any php code to render in the client-side with <? '' ?> tag -->
                <!-- This function is available for version above 1.2.0 -->
                <? $text ?>
@@ -68,7 +68,7 @@
          </p>
       </div>
 
-      <a href="./any"><button class="btn">Navigate To Not Found Page</button></a>
+      <a href="<? asset('any') ?>"><button class="btn">Navigate To Not Found Page</button></a>
    </div>
 </body>
 

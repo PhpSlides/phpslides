@@ -10,8 +10,5 @@ use PhpSlides\Route;
  * | that are not coming from route, it redirects to 404
  * --------------------------------------------------------------------
  */
-Route::redirect('/', '/dashboard');
-Route::view('/dashboard', '::Dashboard');
-
-// Handle not found error pages
+Route::view('/', '::App');
 Route::any('*', view::render('::Errors::404'));
