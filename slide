@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use PhpSlides\Console\Console;
+use PhpSlides\Console;
 
 shell_exec('composer dump-autoload');
 
