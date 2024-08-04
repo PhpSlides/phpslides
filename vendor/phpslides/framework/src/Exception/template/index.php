@@ -1,6 +1,9 @@
 <?php
-$code_json = json_encode($codeSnippet['parsedCode']);
-$highlight_json = json_encode([ $line ]);
+$code_values = htmlspecialchars(
+	implode('', array_values($codeSnippet['parsedCode'])),
+	ENT_NOQUOTES
+);
+$code_keys = json_encode(array_keys($codeSnippet['parsedCode']));
 ?>
 
 <!doctype html>
@@ -9,11 +12,11 @@ $highlight_json = json_encode([ $line ]);
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>Exception Error</title>
+   <title>There was an Unexpected Error</title>
 </head>
 
 <style type="text/css" media="all">
-<?php include_once 'src/highlight.min.css'?>
+<?php echo file_get_contents(__DIR__ . '/src/highlight.min.css'); ?>
 </style>
 
 <style type="text/css" media="all">
@@ -46,6 +49,8 @@ header span {
    font-size: 14px;
    font-weight: 500;
    font-family: monospace;
+   word-break: break-word;
+   overflow-wrap: break-word;
 }
 
 .h {
@@ -87,12 +92,12 @@ header span {
    font-size: 16px;
    min-height: 20px;
    border-radius: 7px;
-   background-color: #ba9582;
+   background-color: #b8a9a9;
 }
 
 .highlighted-line {
    padding-right: 10px;
-   background-color: #ff00006f;
+   background-color: yellow;
 }
 
 .hljs-line-numbers {
@@ -107,15 +112,17 @@ header span {
 <body>
    <header>
       <h3>Parse Error</h3>
-      <span>Syntax error, unexpected T_STRING</span>
+      <span><?php echo str_replace(__ROOT__, '/', $message); ?></span>
    </header>
 
    <div class="container">
       <span class="h">Source File »</span>
 
       <div class="code-wrapper">
-         <span><b>File: </b>../components/style/App.style</span>
-         <pre><code class="language-php" id="code-block"></code></pre>
+         <span><b>File: </b><?php echo str_replace(__ROOT__, '/', $file) .
+         	':' .
+         	$line; ?></span>
+         <pre><code class="language-php"><?php echo $code_values; ?></code></pre>
       </div>
    </div>
 
@@ -123,42 +130,48 @@ header span {
       <span class="h">Call Stack »</span>
 
       <div class="code-wrapper">
-         <span>1. ../components/style/App.style</span>
-         <span>2. ../components/style/App.style</span>
+         <?php foreach ($trace as $key => $value) {
+         	$key = $key + 1;
+         	echo "<span>$key. {$value['file']}:{$value['line']}</span>";
+         } ?>
       </div>
    </div>
 
    <script>
-   <?php include_once 'src/highlight.min.js' ?>
+   <?php echo file_get_contents(__DIR__ . '/src/highlight.min.js'); ?>
    </script>
-
+   
    <script>
-   document.addEventListener('DOMContentLoaded', event => {
-      const codeLines = JSON.parse('<?php echo $code_json; ?>');
-      const linesToHighlight = '';
-   })
-
-   // function addLineNumbers(block) {
-   //    const lines = block.innerHTML.split('\n')
-   //    block.innerHTML = lines
-   //       .map((line, index) => {
-   //          return `<span class="hljs-line-numbers">${index + 1
-   // 					}</span>${line}`
-   //       })
-   //       .join('\n')
-   // }
-
-   // function highlightSpecificLines(block, linesToHighlight) {
-   //    const lines = block.innerHTML.split('\n')
-   //    block.innerHTML = lines
-   //       .map((line, index) => {
-   //          if (linesToHighlight.includes(index + 1)) {
-   //             return `<span class="highlighted-line">${line}</span>`
-   //          }
-   //          return line
-   //       })
-   //       .join('\n')
-   // }
+      document.addEventListener('DOMContentLoaded', (event) => {
+         document.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightBlock(block);
+            addLineNumbers(block);
+            highlightSpecificLines(block, [<?php echo $line; ?>]); // Highlight lines 2 and 3
+         });
+      });
+      
+      function addLineNumbers(block) {
+         const codeLines = <?php echo $code_keys . ";\n"; ?>
+         const lines = block.innerHTML.split('\n');
+         
+         block.innerHTML = lines.map((line, index) => {
+            if (codeLines[index] != undefined) {
+             return `<span class="hljs-line-numbers">${codeLines[index]+1}</span>${line}`;
+            }
+         }).join('\n');
+      }
+      
+      function highlightSpecificLines(block, linesToHighlight) {
+         const codeLines = <?php echo $code_keys . ";\n"; ?>
+         const lines = block.innerHTML.split('\n');
+         
+         block.innerHTML = lines.map((line, index) => {
+             if (linesToHighlight.includes(codeLines[index]+1)) {
+                 return `<span class="highlighted-line">${line}</span>`;
+             }
+             return line;
+         }).join('\n');
+      }
    </script>
 </body>
 
