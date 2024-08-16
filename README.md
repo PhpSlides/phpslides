@@ -26,7 +26,7 @@ streamlining the development process and enhancing productivity.
       -  [Or Clone the Repository](#or-clone-the-repository)
    -  [Configuration](#configuration)
       -  [.env](#env)
-      -  [phpslides.config.json](#phpslidesconfigjson)
+      -  [configs.json](#configsjson)
    -  [Syntax](#syntax)
       -  [Creating Web Layouts](#creating-web-layouts)
       -  [Styling Web Layouts](#styling-web-layouts)
@@ -105,12 +105,12 @@ Edit the .env file to configure database settings, application settings, and oth
 
 ```bash
 APP_NAME=PhpSlides
-APP_SERVER=localhost
-APP_URL=http://localhost
+APP_VERSION=1.2.5
 APP_DEBUG=true
+APP_ENV=development
 ```
 
-### phpslides.config.json
+### configs.json
 
 ```json
 {
@@ -217,16 +217,15 @@ project_root/<br>
 │ ├── configs/<br>
 │ ├── resources/<br>
 │ │ └── views/<br>
-│ │ └── errors/<br>
 ├── vendor/<br>
 ├── .env<br>
 ├── .env.example<br>
 ├── .htaccess<br>
 ├── composer.json<br>
+├── configs.json<br>
 ├── LICENSE<br>
-├── phpslides.config.json<br>
-└── README.md
-├── slide<br>
+├── README.md<br>
+└── slide
 
 ## Documentation
 
