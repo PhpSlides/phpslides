@@ -4,9 +4,10 @@ use PhpSlides\Foundation\Application;
 
 include dirname(__DIR__) . '/../vendor/autoload.php';
 
-Application::configure(basePath: dirname(dirname(__DIR__)))
-	->routing(
-		api: __DIR__ . '/../routes/api.php',
-		web: __DIR__ . '/../routes/web.php'
-	)
-	->create();
+/**
+ * --------------------------------------------------------------------
+ * This is the Bootstrap File in starting the application.
+ * The entry point for the PhpSlides project and functions.
+ * --------------------------------------------------------------------
+ */
+Application::configure(basePath: dirname(dirname(__DIR__)))->create();
