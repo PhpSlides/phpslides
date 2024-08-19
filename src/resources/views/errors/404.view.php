@@ -21,7 +21,7 @@
 <body>
    <div class="container">
       <h3 class="text">404 | Page Not Found</h3>
-      <a href="<? asset('') ?>"><button class="btn">Navigate Back To Dashboard</button></a>
+      <a href={{ asset('') }}><button class="btn">Navigate Back To Dashboard</button></a>
    </div>
 </body>
 

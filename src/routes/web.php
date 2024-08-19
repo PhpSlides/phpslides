@@ -2,6 +2,8 @@
 
 use PhpSlides\view;
 use PhpSlides\Route;
+use PhpSlides\Http\Request;
+use App\Controllers\UserController;
 
 /**
  * --------------------------------------------------------------------
@@ -11,4 +13,4 @@ use PhpSlides\Route;
  * --------------------------------------------------------------------
  */
 Route::view('/', '::App');
-Route::any('*', view::render('::Errors::404'));
+Route::any('*', view::render('::Errors::404'))->name('notFound');

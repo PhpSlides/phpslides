@@ -15,12 +15,14 @@
 		{
 			"name": "Dave Conco",
 			"email": "concodave@gmail.com",
+			"role": "Developer",
 			"homepage": "https://dconco.github.io"
 		}
 	],
 	"require": {
-		"php": "^8.0",
-		"phpslides/framework": "^1.0.0-alpha"
+		"php": "^8.2",
+		"firebase/php-jwt": "^6.10",
+		"phpslides/framework": "^1.2.5"
 	},
 	"config": {
 		"optimize-autoloader": true,

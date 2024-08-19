@@ -1,6 +1,6 @@
 <?php
 
-use PhpSlides\Render;
+use PhpSlides\Foundation\Render;
 use PhpSlides\Loader\FileLoader;
 
 /**
