@@ -2,8 +2,6 @@
 
 use PhpSlides\view;
 use PhpSlides\Route;
-use PhpSlides\Http\Request;
-use App\Controllers\UserController;
 
 /**
  * --------------------------------------------------------------------
