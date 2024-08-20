@@ -1,5 +1,5 @@
 <IfModule mod_rewrite.c>
-   # Don't change this settings, instead edit the phpslides.config.json
+   # Don't change this settings, instead edit the configs.json
    RewriteEngine On
 
    # Accept Authorization Header

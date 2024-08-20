@@ -1,3 +1,5 @@
 <?php
 
-return [];
+return [
+	'auth' => 'App\\Middleware\\AuthMiddleware'
+];

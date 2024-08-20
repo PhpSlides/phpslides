@@ -52,7 +52,7 @@
 <body>
    <div class="container">
       <div class="logo">
-         <img src="<? asset('Assets::Logo.svg') ?>" alt="PhpSlides Logo">
+         <img src={{ asset('Assets::Logo.svg') }} alt="PhpSlides Logo">
       </div>
 
       <div class="description">
@@ -68,7 +68,9 @@
          </p>
       </div>
 
-      <a href="<? asset('any') ?>"><button class="btn">Navigate To Not Found Page</button></a>
+      <a href={{ asset('any') }}>
+         <button class="btn">Navigate To Not Found Page</button>
+      </a>
    </div>
 </body>
 
