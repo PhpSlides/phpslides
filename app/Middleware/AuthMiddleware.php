@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Middlewares;
+namespace App\Middleware;
 
 use Closure;
 use PhpSlides\Web\JWT;
