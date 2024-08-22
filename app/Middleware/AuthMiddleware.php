@@ -9,11 +9,12 @@ use PhpSlides\Interface\MiddlewareInterface;
 
 final class AuthMiddleware implements MiddlewareInterface
 {
-	public function handle(Request $request, Closure $next)
+	public function handle (Request $request, Closure $next)
 	{
-		$token = $request->auth->bearer;
+		$token = $request->auth()->bearer;
 
-		if ($token && JWT::verify($token)) {
+		if ($token && JWT::verify($token))
+		{
 			return $next($request);
 		}
 		return 'Invalid Token';
