@@ -18,7 +18,7 @@
     }],
     "require": {
         "php": "^8.2",
-        "phpslides/framework": "^1.2.8"
+        "phpslides/framework": "^1.2.9"
     },
     "config": {
         "optimize-autoloader": true,
