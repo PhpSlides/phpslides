@@ -10,8 +10,7 @@
 .env.dev
 .env.development
 log
+*.log
 access_log
-requests.log
 composer.lock
 composer.phar
-error.log

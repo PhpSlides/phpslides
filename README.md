@@ -190,9 +190,10 @@ Route::map(POST, '/index')
 
 Api::v1()->define('/user', 'UserController')
   ->map([
-      '/' => [GET, '@index'],
+      '/info' => [GET, '@index'],
       '/{id}' => [GET, '@show'],
   ])
+  ->withGuard('auth')
   ->name('user');
 
 $user_id_route = route('user::1');
@@ -206,9 +207,9 @@ Here's an overview of the project directory structure:
 
 project_root/<br>
 ├── app/<br>
-│ ├── Controllers/<br>
-│ ├── Middlewares/<br>
-│ ├── Models/<br>
+│ ├── Controller/<br>
+│ ├── Guards/<br>
+│ ├── Forge/<br>
 ├── public/<br>
 ├── src/<br>
 │ ├── bootstrap/<br>
