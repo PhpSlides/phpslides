@@ -16,27 +16,27 @@ streamlining the development process and enhancing productivity.
 
 ## Table of Contents
 
-- [PhpSlides](#phpslides)
-  - [Table of Contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [Features](#features)
-  - [Requirements](#requirements)
-  - [Installation](#installation)
-    - [Install with Composer](#install-with-composer)
-    - [Or Clone the Repository](#or-clone-the-repository)
-  - [Configuration](#configuration)
-    - [.env](#env)
-    - [configs.json](#configsjson)
-  - [Syntax](#syntax)
-    - [Creating Web Layouts](#creating-web-layouts)
-    - [Styling Web Layouts](#styling-web-layouts)
-    - [Creating Web Routes](#creating-web-routes)
-    - [Creating API Routes](#creating-api-routes)
-  - [Directory Structure](#directory-structure)
-  - [Documentation](#documentation)
-  - [Contributing](#contributing)
-  - [License](#license)
-  - [Financial Support](#financial-support)
+-  [PhpSlides](#phpslides)
+   -  [Table of Contents](#table-of-contents)
+   -  [Introduction](#introduction)
+   -  [Features](#features)
+   -  [Requirements](#requirements)
+   -  [Installation](#installation)
+      -  [Install with Composer](#install-with-composer)
+      -  [Or Clone the Repository](#or-clone-the-repository)
+   -  [Configuration](#configuration)
+      -  [.env](#env)
+      -  [configs.json](#configsjson)
+   -  [Syntax](#syntax)
+      -  [Creating Web Layouts](#creating-web-layouts)
+      -  [Styling Web Layouts](#styling-web-layouts)
+      -  [Creating Web Routes](#creating-web-routes)
+      -  [Creating API Routes](#creating-api-routes)
+   -  [Directory Structure](#directory-structure)
+   -  [Documentation](#documentation)
+   -  [Contributing](#contributing)
+   -  [License](#license)
+   -  [Financial Support](#financial-support)
 
 ## Introduction
 
@@ -47,17 +47,17 @@ Additionally, it provides the capability to write HTML, CSS, and JavaScript in a
 
 ## Features
 
-- **Full-Stack Development**: Seamlessly integrate front-end and back-end development by writing HTML, CSS, and JavaScript in a PHP-like syntax.
-- **Simple Routing**: Easily define routes and map them to controllers and actions.
-- **Modular Structure**: Organized directory structure for models, views, controllers, and other components.
-- **Database Abstraction**: Simple and flexible database handling with a query builder.
-- **Middleware Support**: Add middleware to handle authentication, logging, and other tasks.
+-  **Full-Stack Development**: Seamlessly integrate front-end and back-end development by writing HTML, CSS, and JavaScript in a PHP-like syntax.
+-  **Simple Routing**: Easily define routes and map them to controllers and actions.
+-  **Modular Structure**: Organized directory structure for models, views, controllers, and other components.
+-  **Database Forgery**: A unique feature that allows you to manage your databases and tables using a structured directory format, automatically generating and managing schema migrations based on directory and file structures.
+-  **AuthGuard Support**: Add authorization guard to handle authentication, logging, and other tasks.
 
 ## Requirements
 
-- PHP 8.2 or higher
-- Composer
-- A web server (e.g., Apache, Nginx)
+-  PHP 8.2 or higher
+-  Composer
+-  A web server (e.g., Apache, Nginx)
 
 ## Installation
 
@@ -103,7 +103,7 @@ Edit the .env file to configure database settings, application settings, and oth
 
 ```bash
 APP_NAME=PhpSlides
-APP_VERSION=1.2.8
+APP_VERSION=1.3.1
 APP_DEBUG=true
 APP_ENV=development
 ```
@@ -112,20 +112,20 @@ APP_ENV=development
 
 ```json
 {
- "public": {
-  "/": ["*"],
-  "assets": ["*"],
-  "images": ["image"],
-  "videos": ["video"],
-  "audios": ["audio"],
-  "styles": ["css", "scss", "sass"],
-  "css": ["css", "scss", "sass"],
-  "src": ["js", "ts", "css", "scss", "sass"],
-  "png": ["png"],
-  "jpg": ["jpg"],
-  "svg": ["svg"]
- },
- "charset": "UTF-8"
+	"public": {
+		"/": ["*"],
+		"assets": ["*"],
+		"images": ["image"],
+		"videos": ["video"],
+		"audios": ["audio"],
+		"styles": ["css", "scss", "sass"],
+		"css": ["css", "scss", "sass"],
+		"src": ["js", "ts", "css", "scss", "sass"],
+		"png": ["png"],
+		"jpg": ["jpg"],
+		"svg": ["svg"]
+	},
+	"charset": "UTF-8"
 }
 ```
 
@@ -190,9 +190,10 @@ Route::map(POST, '/index')
 
 Api::v1()->define('/user', 'UserController')
   ->map([
-      '/' => [GET, '@index'],
+      '/info' => [GET, '@index'],
       '/{id}' => [GET, '@show'],
   ])
+  ->withGuard('auth')
   ->name('user');
 
 $user_id_route = route('user::1');
@@ -206,9 +207,9 @@ Here's an overview of the project directory structure:
 
 project_root/<br>
 ├── app/<br>
-│ ├── Controllers/<br>
-│ ├── Middlewares/<br>
-│ ├── Models/<br>
+│ ├── Controller/<br>
+│ ├── Guards/<br>
+│ ├── Forge/<br>
 ├── public/<br>
 ├── src/<br>
 │ ├── bootstrap/<br>
