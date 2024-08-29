@@ -103,7 +103,7 @@ Edit the .env file to configure database settings, application settings, and oth
 
 ```bash
 APP_NAME=PhpSlides
-APP_VERSION=1.2.9
+APP_VERSION=1.3.1
 APP_DEBUG=true
 APP_ENV=development
 ```
