@@ -1,4 +1,4 @@
-# PhpSlides
+# PhpSlide
 
 <p align="center">
    <a href="https://packagist.org/packages/phpslides/framework"><img src="https://img.shields.io/packagist/dt/phpslides/framework" alt="Total Downloads"></a>
@@ -103,7 +103,7 @@ Edit the .env file to configure database settings, application settings, and oth
 
 ```bash
 APP_NAME=PhpSlides
-APP_VERSION=1.3.1
+APP_VERSION=1.3.x
 APP_DEBUG=true
 APP_ENV=development
 ```
