@@ -50,8 +50,8 @@ Additionally, it provides the capability to write HTML, CSS, and JavaScript in a
 -  **Full-Stack Development**: Seamlessly integrate front-end and back-end development by writing HTML, CSS, and JavaScript in a PHP-like syntax.
 -  **Simple Routing**: Easily define routes and map them to controllers and actions.
 -  **Modular Structure**: Organized directory structure for models, views, controllers, and other components.
--  **Database Abstraction**: Simple and flexible database handling with a query builder.
--  **Middleware Support**: Add middleware to handle authentication, logging, and other tasks.
+-  **Database Forgery**: A unique feature that allows you to manage your databases and tables using a structured directory format, automatically generating and managing schema migrations based on directory and file structures.
+-  **AuthGuard Support**: Add authorization guard to handle authentication, logging, and other tasks.
 
 ## Requirements
 
