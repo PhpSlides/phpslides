@@ -26,7 +26,7 @@ streamlining the development process and enhancing productivity.
       -  [Or Clone the Repository](#or-clone-the-repository)
    -  [Configuration](#configuration)
       -  [.env](#env)
-      -  [configs.json](#configsjson)
+      -  [configs.json](#configjson)
    -  [Syntax](#syntax)
       -  [Creating Web Layouts](#creating-web-layouts)
       -  [Styling Web Layouts](#styling-web-layouts)
@@ -108,22 +108,17 @@ APP_DEBUG=true
 APP_ENV=development
 ```
 
-### configs.json
+### config.json
+
+Which handles the behavior of a viewing files on the web
 
 ```json
 {
-	"public": {
-		"/": ["*"],
-		"assets": ["*"],
-		"images": ["image"],
-		"videos": ["video"],
-		"audios": ["audio"],
-		"styles": ["css", "scss", "sass"],
-		"css": ["css", "scss", "sass"],
-		"src": ["js", "ts", "css", "scss", "sass"],
-		"png": ["png"],
-		"jpg": ["jpg"],
-		"svg": ["svg"]
+	"deny": ["public/assets/*.png"],
+	"message": {
+		"contents": "403 | Forbidden",
+		"components": "Errors::403",
+		"content-type": "text/html"
 	},
 	"charset": "UTF-8"
 }
