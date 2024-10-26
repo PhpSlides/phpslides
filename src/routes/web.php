@@ -1,7 +1,6 @@
 <?php
 
-use PhpSlides\view;
-use PhpSlides\Route;
+use PhpSlides\{Route, view};
 
 /**
  * --------------------------------------------------------------------
