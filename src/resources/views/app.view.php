@@ -1,6 +1,4 @@
-<!-- PHP code start -->
 <? $text = 'Click to view documentation'; ?>
-<!-- // End PHP code -->
 
 <!DOCTYPE html>
 <html lang="en">
