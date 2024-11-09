@@ -218,10 +218,8 @@ project_root/<br>
 ├── .env.example<br>
 ├── .htaccess<br>
 ├── composer.json<br>
-├── configs.json<br>
-├── LICENSE<br>
-├── README.md<br>
-└── slide
+├── config.json<br>
+└── README.md
 
 ## Documentation
 
