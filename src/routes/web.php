@@ -10,4 +10,4 @@ use PhpSlides\{Route, view};
  * --------------------------------------------------------------------
  */
 Route::view('/', '::App');
-Route::any('*', view::render('Errors::404'));
+Route::any('*', view::render('::Errors::NotFound'));
