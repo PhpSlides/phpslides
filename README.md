@@ -1,4 +1,4 @@
-# PhpSlide
+# PhpSlides
 
 <p align="center">
    <a href="https://packagist.org/packages/phpslides/framework"><img src="https://img.shields.io/packagist/dt/phpslides/framework" alt="Total Downloads"></a>
@@ -202,12 +202,14 @@ Here's an overview of the project directory structure:
 
 project_root/<br>
 ├── app/<br>
-│ ├── Controller/<br>
+│ ├── Forgery/<br>
 │ ├── Guards/<br>
-│ ├── Forge/<br>
+│ ├── Http/<br>
+│ │ └── Api/<br>
+│ │ └── Controller/<br>
 ├── public/<br>
 ├── src/<br>
-│ ├── bootstrap/<br>
+│ ├── routes/<br>
 │ ├── configs/<br>
 │ ├── resources/<br>
 │ │ └── views/<br>
@@ -216,10 +218,8 @@ project_root/<br>
 ├── .env.example<br>
 ├── .htaccess<br>
 ├── composer.json<br>
-├── configs.json<br>
-├── LICENSE<br>
-├── README.md<br>
-└── slide
+├── config.json<br>
+└── README.md
 
 ## Documentation
 
