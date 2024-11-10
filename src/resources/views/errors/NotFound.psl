@@ -2,9 +2,8 @@
 <html lang="en">
 
 <head>
-   <title>404 | Page Not Found</title>
-   <!-- includes the Header.php file -->
-   <!INCLUDES path="../components/Header" />
+   {{! include the Header.psl file !}}
+   <!INCLUDES path="../components/Header" title="404 | Page Not Found" />
 
    <style>
       h3.text {
