@@ -4,8 +4,8 @@
 <html lang="en">
 
 <head>
-   <title>Dashboard | PhpSlides</title>
-   <include path="components/Header" />
+   {{! include the Header.psl file !}}
+   <!INCLUDES path="components/Header" title="Dashboard | PhpSlides" />
    
    <style>
       .logo {
@@ -38,7 +38,7 @@
 </head>
 
 
-<!-- View Contents Begins -->
+{{! View Contents Begins !}}
 
 <body>
    <div class="container">
