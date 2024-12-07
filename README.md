@@ -1,4 +1,4 @@
-# PhpSlide
+# PhpSlides
 
 [![Total Downloads](https://img.shields.io/packagist/dt/phpslides/framework)](https://packagist.org/packages/phpslides/framework)
 [![Latest Stable Version](https://img.shields.io/packagist/v/phpslides/framework)](https://packagist.org/packages/phpslides/framework)
