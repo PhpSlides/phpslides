@@ -7,10 +7,12 @@
 /.vscode
 .log
 .env
-.env.dev
-.env.development
+.env.prod
+.env.local
+.env.stage
+.env.staging
+.env.production
 log
 *.log
 access_log
-composer.lock
 composer.phar
