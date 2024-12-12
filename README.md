@@ -102,7 +102,7 @@ Edit the .env file to configure database settings, application settings, and oth
 
 ```bash
 APP_NAME=PhpSlides
-APP_VERSION=1.3.x
+APP_VERSION=1.4.x
 APP_DEBUG=true
 APP_ENV=development
 ```
@@ -113,11 +113,12 @@ Which handles the behavior of a viewing files on the web
 
 ```json
 {
- "deny": ["public/assets/*.png"],
+ "deny": ["/assets/*.png"],
  "message": {
   "contents": "403 | Forbidden",
   "components": "Errors::403",
-  "content-type": "text/html"
+  "content-type": "text/html",
+  "http_code": 403
  },
  "charset": "UTF-8"
 }
