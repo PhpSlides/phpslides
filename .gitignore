@@ -5,6 +5,7 @@
 /vendor
 /.idea
 /.vscode
+/app/cache
 .log
 .env
 .env.prod
