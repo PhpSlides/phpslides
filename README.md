@@ -1,5 +1,8 @@
 # PhpSlides
 
+[![Tests Workflow](https://github.com/phpslides/framework/workflows/Tests/badge.svg)](https://github.com/PhpSlides/framework/actions)
+[![Release Workflow](https://github.com/phpslides/framework/workflows/Release/badge.svg)](https://github.com/PhpSlides/framework/actions)
+
 [![Total Downloads](https://img.shields.io/packagist/dt/phpslides/framework)](https://packagist.org/packages/phpslides/framework)
 [![Latest Stable Version](https://img.shields.io/packagist/v/phpslides/framework)](https://packagist.org/packages/phpslides/framework)
 [![License](https://img.shields.io/packagist/l/phpslides/framework)](https://packagist.org/packages/phpslides/framework)
