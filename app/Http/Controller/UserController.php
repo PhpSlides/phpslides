@@ -2,7 +2,7 @@
 
 namespace App\Http\Controller;
 
-use PhpSlides\Http\Request;
+use PhpSlides\Core\Http\Request;
 
 final class UserController
 {

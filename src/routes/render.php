@@ -1,8 +1,8 @@
 <?php
 
-use PhpSlides\Route;
-use PhpSlides\Foundation\Render;
-use PhpSlides\Loader\FileLoader;
+use PhpSlides\Router\Route;
+use PhpSlides\Core\Foundation\Render;
+use PhpSlides\Core\Loader\FileLoader;
 
 include __DIR__ . '/../../vendor/autoload.php';
 
