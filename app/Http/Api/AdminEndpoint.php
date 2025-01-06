@@ -2,8 +2,8 @@
 
 namespace App\Http\Api;
 
-use PhpSlides\Http\Request;
-use PhpSlides\Http\ApiController;
+use PhpSlides\Core\Http\Request;
+use PhpSlides\Core\Http\ApiController;
 
 final class AdminEndpoint extends ApiController
 {

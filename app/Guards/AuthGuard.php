@@ -2,8 +2,8 @@
 
 namespace App\Guards;
 
-use PhpSlides\Web\JWT;
-use PhpSlides\Http\Auth\AuthGuard as BaseAuthGuard;
+use PhpSlides\Core\Web\JWT;
+use PhpSlides\Core\Http\Auth\AuthGuard as BaseAuthGuard;
 
 final class AuthGuard extends BaseAuthGuard
 {
