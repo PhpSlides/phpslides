@@ -107,7 +107,7 @@ Edit the .env file to configure database settings, application settings, and oth
 APP_NAME=PhpSlides
 APP_VERSION=1.4.x
 APP_DEBUG=true
-APP_ENV=development
+APP_ENV=local
 ```
 
 ### config.json
